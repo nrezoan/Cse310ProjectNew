@@ -2,6 +2,9 @@
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Scanner;
 
 
@@ -9,6 +12,8 @@ public class Client {
 
     private static ObjectOutputStream oos;
     private static ObjectInputStream ois;
+    private static ArrayList<String> userNameList;
+    
 
     public static void main(String args[]) {
         try {
@@ -16,21 +21,24 @@ public class Client {
             int serverPort = 33333;
             Socket client = new Socket(serverAddress, serverPort);
             Scanner input = new Scanner(System.in);
+            userNameList=new ArrayList<String>();
             oos = new ObjectOutputStream(client.getOutputStream());
             ois = new ObjectInputStream(client.getInputStream());
-            new ReadThread(ois);
+            String name="name "+input.next();
+            //sending the name object to the server
+            oos.writeObject(name);
+            new ReadThread(ois,name,userNameList);
             while (true) {
                 //String s=br.readLine();
                 String s = input.nextLine();
                 oos.writeObject(s);
             }
             
-            
         } catch (Exception e) {
             System.out.println(e);
         }
-
     }
+    
 
 }
 
@@ -39,13 +47,15 @@ public class Client {
 {
  private Thread thr;
  ObjectInputStream ois;
- 
-
- public ReadThread(ObjectInputStream ois) 
+ String name;
+ ArrayList<String> userNameList;
+ public ReadThread(ObjectInputStream ois, String name, ArrayList<String> userNameList) 
  {
   this.ois=ois;
+  this.name=name;
+  this.userNameList=userNameList;
   this.thr = new Thread(this);
-  thr.start();
+  thr.start(); 
  }
  
  public void run() 
@@ -56,11 +66,10 @@ public class Client {
    {
     String t=(String)ois.readObject();
     if(t != null){
-    	if(t.equals("From Server: nazib")){
-        	System.out.println("it is working");
-        }
-    	else if(t.equals("From Server: diba")){
-    		System.out.println("it is working diba");
+    	if(t.startsWith("name ")){
+    		String name = t.substring(5);
+    		ArrayList<String> nameList = new ArrayList<String>(Arrays.asList(name.split(" ")));
+    		printingArrayList(nameList);
     	}
     }
     
@@ -70,9 +79,17 @@ public class Client {
   {
    System.out.println (e);                        
   }   
-                
-  
+
  }
+ void updateUserNameList(){
+	 
+ }
+ void printingArrayList(ArrayList<String> nameList){
+	 for(int i=0;i<nameList.size();i++){
+		 System.out.println(nameList.get(i));
+	 }
+ }
+ 
 }
 
 
