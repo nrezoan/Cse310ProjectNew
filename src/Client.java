@@ -19,11 +19,18 @@ public class Client {
         try {
             String serverAddress = "127.0.0.1";
             int serverPort = 33333;
-            Socket client = new Socket(serverAddress, serverPort);
+            Socket client = new Socket(serverAddress, serverPort);          
             Scanner input = new Scanner(System.in);
             userNameList=new ArrayList<String>();
             oos = new ObjectOutputStream(client.getOutputStream());
             ois = new ObjectInputStream(client.getInputStream());
+            
+            //here user-registration and
+            //user log-in will take place
+            //
+            UserRegistration frame = new UserRegistration(oos,ois);
+            frame.setVisible(true);
+            
             String name="name "+input.next();
             //sending the name object to the server
             oos.writeObject(name);

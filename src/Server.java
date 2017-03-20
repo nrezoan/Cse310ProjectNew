@@ -48,7 +48,7 @@ class ServerThread implements Runnable {
 		try {
 			this.ClientSock = client;
 			// adding the thread to the list
-			serverThreadList.add(this);
+			serverThreadList.add(this);//this line will happen after login
 			client_count++;
 			oos = new ObjectOutputStream(ClientSock.getOutputStream());
 			ois = new ObjectInputStream(ClientSock.getInputStream());
@@ -76,6 +76,14 @@ class ServerThread implements Runnable {
 						//sending updated string to all clients
 						sendingFromServerToAllClient("name ", allClientName);						
 					}
+					else if(str.startsWith("SignUp ")){
+						System.out.println("Sign up button pressed in client side");
+						
+					}
+					else if(str.startsWith("LogIn ")){
+						System.out.println("Log In button pressed in client side");
+						oos.writeObject("message from server");
+					}
 
 				}
 
@@ -94,7 +102,7 @@ class ServerThread implements Runnable {
 	void sendingFromServerToAllClient(String tag, String message) {
 		for (int i = 0; i < serverThreadList.size(); i++) {
 			try {
-				serverThreadList.get(i).oos.writeObject(tag + " " + message);
+				serverThreadList.get(i).oos.writeObject(tag + "" + message);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				System.err.println("error at method sendingFromServer");
