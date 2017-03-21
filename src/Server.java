@@ -77,7 +77,7 @@ class ServerThread implements Runnable {
 						sendingFromServerToAllClient("name ", allClientName);						
 					}
 					else if(str.startsWith("SignUp ")){
-						System.out.println("Sign up button pressed in client side");
+						System.out.println(t);
 						
 					}
 					else if(str.startsWith("LogIn ")){
