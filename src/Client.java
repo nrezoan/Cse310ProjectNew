@@ -34,14 +34,15 @@ public class Client {
 			String name = "name " + frame.getUserName();
 			String userName = name.substring(5);
 			frame.dispose();
-			new MainWindow(oos,ois,userName).setVisible(true);
+			MainWindow mainWindow=new MainWindow(oos,ois,userName);
+			mainWindow.setVisible(true);
 
 			System.out.println("from client user logged in");
 
 			
 			// sending the name object to the server
 			oos.writeObject(name);
-			new ReadThread(ois, name, userNameList);
+			new ReadThread(ois, name, userNameList,mainWindow);
 			while (true) {
 				// String s=br.readLine();
 				String s = input.nextLine();
@@ -60,11 +61,13 @@ class ReadThread implements Runnable {
 	ObjectInputStream ois;
 	String name;
 	ArrayList<String> userNameList;
+	MainWindow mainWindow;
 
-	public ReadThread(ObjectInputStream ois, String name, ArrayList<String> userNameList) {
+	public ReadThread(ObjectInputStream ois, String name, ArrayList<String> userNameList, MainWindow mainWindow) {
 		this.ois = ois;
 		this.name = name;
 		this.userNameList = userNameList;
+		this.mainWindow=mainWindow;
 		this.thr = new Thread(this);
 		thr.start();
 	}
