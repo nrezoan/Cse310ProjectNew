@@ -81,7 +81,7 @@ class ServerThread implements Runnable {
 						
 					}
 					else if(str.startsWith("LogIn ")){
-						System.out.println("Log In button pressed in client side");
+						System.out.println(t);
 						oos.writeObject("message from server");
 					}
 

@@ -28,8 +28,8 @@ public class UserRegistration extends JFrame {
 	private JTextField textField_name;
 	private JPasswordField textField_password;
 	private JTextField textField_email;
-	private JTextField textField_2;
-	private JPasswordField passwordField_1;
+	private JTextField textField_login_name;
+	private JPasswordField passwordField_login_password;
 	private JTextField textField_age;
 	private JPasswordField textField_confirmation;
 	private ObjectOutputStream oos;
@@ -98,26 +98,26 @@ public class UserRegistration extends JFrame {
 		JLabel lblPassword = new JLabel("Password");
 		lblPassword.setForeground(new Color(255, 255, 255));
 		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblPassword.setBounds(43, 309, 86, 20);
+		lblPassword.setBounds(43, 275, 86, 20);
 		panel.add(lblPassword);
 
 		textField_password = new JPasswordField();
 		textField_password.setBackground(new Color(245, 245, 245));
-		textField_password.setBounds(133, 303, 199, 26);
+		textField_password.setBounds(133, 269, 199, 26);
 		panel.add(textField_password);
 		
 
 		JLabel lblEmail = new JLabel("Email");
 		lblEmail.setForeground(new Color(255, 255, 255));
 		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblEmail.setBounds(43, 254, 71, 20);
+		lblEmail.setBounds(43, 232, 71, 20);
 		panel.add(lblEmail);
 
 		textField_email = new JTextField();
 		textField_email.setBackground(new Color(245, 245, 245));
 		textField_email.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		textField_email.setColumns(10);
-		textField_email.setBounds(133, 248, 199, 26);
+		textField_email.setBounds(133, 226, 199, 26);
 		panel.add(textField_email);
 		
 
@@ -171,38 +171,38 @@ public class UserRegistration extends JFrame {
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnNewButton.setBackground(UIManager.getColor("Button.disabledForeground"));
-		btnNewButton.setBounds(213, 375, 120, 33);
+		btnNewButton.setBounds(212, 364, 120, 33);
 		panel.add(btnNewButton);
 
 		textField_age = new JTextField();
 		textField_age.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		textField_age.setColumns(10);
 		textField_age.setBackground(new Color(245, 245, 245));
-		textField_age.setBounds(133, 187, 199, 26);
+		textField_age.setBounds(133, 181, 199, 26);
 		panel.add(textField_age);
 		
 
 		JLabel lblAge = new JLabel("Age");
 		lblAge.setForeground(Color.WHITE);
 		lblAge.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblAge.setBounds(43, 189, 71, 20);
+		lblAge.setBounds(43, 183, 71, 20);
 		panel.add(lblAge);
 
 		textField_confirmation = new JPasswordField();
 		textField_confirmation.setBackground(new Color(245, 245, 245));
-		textField_confirmation.setBounds(133, 338, 199, 26);
+		textField_confirmation.setBounds(133, 315, 199, 26);
 		panel.add(textField_confirmation);
 		
 
 		JLabel lblConfirm = new JLabel("Confirm");
 		lblConfirm.setForeground(Color.WHITE);
 		lblConfirm.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblConfirm.setBounds(43, 344, 86, 20);
+		lblConfirm.setBounds(43, 321, 88, 20);
 		panel.add(lblConfirm);
 
-		JLabel lblNewLabel = new JLabel("New label");
+		JLabel lblNewLabel = new JLabel();
 		lblNewLabel.setIcon(new ImageIcon("img3.jpg"));
-		lblNewLabel.setBounds(0, 0, 434, 461);
+		lblNewLabel.setBounds(0, -8, 434, 461);
 		panel.add(lblNewLabel);
 
 		JPanel panel_1 = new JPanel();
@@ -222,28 +222,41 @@ public class UserRegistration extends JFrame {
 		label_1.setBounds(79, 199, 71, 20);
 		panel_1.add(label_1);
 
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textField_2.setColumns(10);
-		textField_2.setBounds(169, 193, 199, 26);
-		panel_1.add(textField_2);
+		textField_login_name = new JTextField();
+		textField_login_name.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		textField_login_name.setColumns(10);
+		textField_login_name.setBounds(169, 193, 199, 26);
+		panel_1.add(textField_login_name);
 
 		JLabel label_3 = new JLabel("Password");
 		label_3.setFont(new Font("Tahoma", Font.BOLD, 15));
 		label_3.setBounds(79, 257, 86, 20);
 		panel_1.add(label_3);
 
-		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(169, 251, 199, 26);
-		panel_1.add(passwordField_1);
+		passwordField_login_password = new JPasswordField();
+		passwordField_login_password.setBounds(169, 251, 199, 26);
+		panel_1.add(passwordField_login_password);
 
 		JButton btnSignin = new JButton("Sign In");
 		btnSignin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				String loginInfo ="";
 				try {
-					oos.writeObject("LogIn ");
-					String listen = (String) ois.readObject();
-					System.out.println(listen);
+					if(!textField_login_name.getText().equals("") && !passwordField_login_password.getText().equals("")){
+						loginInfo = textField_login_name.getText() + " " + passwordField_login_password.getText();
+						oos.writeObject("LogIn "+ loginInfo);
+						
+						String listen = (String) ois.readObject();
+						System.out.println(listen);
+						
+						textField_login_name.setText("");
+						passwordField_login_password.setText("");
+					}
+					else{
+						JOptionPane.showMessageDialog(null,"Please enter name and password","Alert",JOptionPane.WARNING_MESSAGE);
+					}
+					
+					
 				} catch (IOException | ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
