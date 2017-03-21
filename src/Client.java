@@ -32,8 +32,9 @@ public class Client {
 				System.out.println(frame.isLoggedIn());
 			}
 			String name = "name " + frame.getUserName();
+			String userName = name.substring(5);
 			frame.dispose();
-			new MainWindow(oos,ois).setVisible(true);
+			new MainWindow(oos,ois,userName).setVisible(true);
 
 			System.out.println("from client user logged in");
 

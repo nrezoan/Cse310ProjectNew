@@ -42,6 +42,7 @@ public class MainWindow extends JFrame {
 	private String whoseTurn = "X";
 	private ObjectOutputStream oos;
 	private ObjectInputStream ois;
+	private String name="";
 	   
 	String[][] board = new String [3][3];
 	
@@ -53,7 +54,7 @@ public class MainWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainWindow frame = new MainWindow(null,null);
+					MainWindow frame = new MainWindow(null,null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -66,10 +67,12 @@ public class MainWindow extends JFrame {
 	 * Create the frame.
 	 * @param ois 
 	 * @param oos 
+	 * @param name 
 	 */
-	public MainWindow(ObjectOutputStream oos, ObjectInputStream ois) {
+	public MainWindow(ObjectOutputStream oos, ObjectInputStream ois, String name) {
 		this.oos=oos;
 		this.ois=ois;
+		this.name=name;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 500);
 		contentPane = new JPanel();
@@ -359,7 +362,7 @@ public class MainWindow extends JFrame {
 		btnLogout.setBounds(762, 11, 89, 23);
 		headerPanel.add(btnLogout);
 		
-		JLabel userName = new JLabel("Name");
+		JLabel userName = new JLabel(name);
 		userName.setBounds(698, 15, 54, 14);
 		headerPanel.add(userName);
 		

@@ -104,9 +104,10 @@ class ServerThread implements Runnable {
 						String allClientName = getAllClientName();
 						// sending updated string to all clients
 						sendingFromServerToAllClient("name ", allClientName);
+						System.out.println("All current clients are after logout "+getAllClientName());
 						return;
 					}
-					
+					System.out.println("All current clients are "+getAllClientName());
 
 				}
 
