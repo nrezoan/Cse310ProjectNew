@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import java.net.UnknownHostException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,16 +14,18 @@ public class Server {
 
 	private ServerSocket ServSock;
 	static ArrayList<ServerThread> serverThreadList;
+	static DAO dao;
 
 	Server() {
 		try {
 
 			ServSock = new ServerSocket(33333);
 			serverThreadList = new ArrayList<ServerThread>();
+			dao = new DAO();
 			System.out.println("Server running at port 33333");
 			while (true) {
 
-				ServerThread m = new ServerThread(ServSock.accept(), serverThreadList);
+				ServerThread m = new ServerThread(ServSock.accept(), serverThreadList, dao);
 
 			}
 		} catch (Exception e) {
@@ -43,17 +46,18 @@ class ServerThread implements Runnable {
 	private ObjectInputStream ois;
 	static int client_count = 0;
 	private ArrayList<ServerThread> serverThreadList;
+	private DAO dao;
 
-	ServerThread(Socket client, ArrayList<ServerThread> serverThreadList) {
+	ServerThread(Socket client, ArrayList<ServerThread> serverThreadList, DAO dao) {
 		try {
 			this.ClientSock = client;
 			// adding the thread to the list
-			serverThreadList.add(this);//this line will happen after login
-			client_count++;
+
 			oos = new ObjectOutputStream(ClientSock.getOutputStream());
 			ois = new ObjectInputStream(ClientSock.getInputStream());
 			this.serverThreadList = serverThreadList;
 			this.thr = new Thread(this);
+			this.dao = dao;
 			thr.start();
 		} catch (Exception ex) {
 
@@ -72,18 +76,37 @@ class ServerThread implements Runnable {
 						String name = str.substring(5);
 						setServerThreadName(name);
 						System.out.println("new Client added " + name);
-						String allClientName=getAllClientName();
-						//sending updated string to all clients
-						sendingFromServerToAllClient("name ", allClientName);						
+						String allClientName = getAllClientName();
+						// sending updated string to all clients
+						sendingFromServerToAllClient("name ", allClientName);
+					} else if (str.startsWith("SignUp ")) {
+						String queryValues = str.substring(7);
+						System.out.println(queryValues);
+						ArrayList<String> valList = new ArrayList<String>(Arrays.asList(queryValues.split(" ")));
+						int age = Integer.parseInt(valList.get(1));
+						dao.signUp(valList.get(0), age, valList.get(2), valList.get(3), valList.get(4));
+
+					} else if (str.startsWith("LogIn ")) {
+						String queryValues = str.substring(6);
+						ArrayList<String> valList = new ArrayList<String>(Arrays.asList(queryValues.split(" ")));
+						boolean state = dao.logIn(valList.get(0), valList.get(1));
+						if (state) {
+							oos.writeObject("Success");
+							serverThreadList.add(this);// this line will happen
+														// after login
+							client_count++;
+						} else {
+							oos.writeObject("Failed");
+						}
+
+					}else if(str.equals("Logout")){
+						serverThreadList.remove(this);
+						String allClientName = getAllClientName();
+						// sending updated string to all clients
+						sendingFromServerToAllClient("name ", allClientName);
+						return;
 					}
-					else if(str.startsWith("SignUp ")){
-						System.out.println(t);
-						
-					}
-					else if(str.startsWith("LogIn ")){
-						System.out.println(t);
-						oos.writeObject("message from server");
-					}
+					
 
 				}
 
@@ -111,21 +134,20 @@ class ServerThread implements Runnable {
 		}
 	}
 
-	String getAllClientName() {
+	public String getAllClientName() {
 		String allClientName = "";
 		for (int i = 0; i < serverThreadList.size(); i++) {
 			if (allClientName.equals("")) {
 				allClientName = serverThreadList.get(i).getClientName();
-			}
-			else{
+			} else {
 				allClientName += " " + serverThreadList.get(i).getClientName();
 			}
-			
+
 		}
 		return allClientName;
 	}
 
-	String getClientName() {
+	public String getClientName() {
 		return this.thr.getName();
 	}
 }

@@ -35,6 +35,8 @@ public class UserRegistration extends JFrame {
 	private ObjectOutputStream oos;
 	private ObjectInputStream ois;
 	private UserRegistrationGetterSetter registrationGetterSetter;
+	private boolean flag=false;
+	private String userName="";
 
 	/**
 	 * Launch the application.
@@ -247,6 +249,19 @@ public class UserRegistration extends JFrame {
 						oos.writeObject("LogIn "+ loginInfo);
 						
 						String listen = (String) ois.readObject();
+						if(listen.equals("Success")){
+							userName=textField_login_name.getText();
+							flag=true;
+							System.out.println("login successfull");
+							//game has started baby
+							
+							
+						}
+						else if(listen.equals("Failed")){
+							flag=false;
+							System.out.println("login unsuccessful by diba's curse");
+							JOptionPane.showMessageDialog(null,"Log In Failed\nUser Name Does not exist or \nPassword Does Not match");
+						}
 						System.out.println(listen);
 						
 						textField_login_name.setText("");
@@ -273,5 +288,12 @@ public class UserRegistration extends JFrame {
 		lblSignInHere.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSignInHere.setBounds(96, 128, 232, 26);
 		panel_1.add(lblSignInHere);
+	}
+	
+	public boolean isLoggedIn(){
+		return flag;
+	}
+	public String getUserName(){
+		return userName;
 	}
 }

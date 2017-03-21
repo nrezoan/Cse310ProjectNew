@@ -13,6 +13,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -37,6 +40,8 @@ public class MainWindow extends JFrame {
 	private JButton btn21;
 	private JButton btn22;
 	private String whoseTurn = "X";
+	private ObjectOutputStream oos;
+	private ObjectInputStream ois;
 	   
 	String[][] board = new String [3][3];
 	
@@ -48,7 +53,7 @@ public class MainWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainWindow frame = new MainWindow();
+					MainWindow frame = new MainWindow(null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,8 +64,12 @@ public class MainWindow extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param ois 
+	 * @param oos 
 	 */
-	public MainWindow() {
+	public MainWindow(ObjectOutputStream oos, ObjectInputStream ois) {
+		this.oos=oos;
+		this.ois=ois;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 500);
 		contentPane = new JPanel();
@@ -336,6 +345,17 @@ public class MainWindow extends JFrame {
 		headerPanel.setLayout(null);
 		
 		JButton btnLogout = new JButton("Logout");
+		btnLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					oos.writeObject("Logout");
+					dispose();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		btnLogout.setBounds(762, 11, 89, 23);
 		headerPanel.add(btnLogout);
 		
