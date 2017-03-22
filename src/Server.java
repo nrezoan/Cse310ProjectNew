@@ -107,7 +107,11 @@ class ServerThread implements Runnable {
 						System.out.println("All current clients are after logout "+getAllClientName());
 						return;
 					}
-					System.out.println("All current clients are "+getAllClientName());
+					else if(str.startsWith("pairRequest ")){
+						String pairClient = str.substring(12);
+						System.out.println("The selected client " + pairClient);
+					}
+				//	System.out.println("All current clients are "+getAllClientName());
 
 				}
 

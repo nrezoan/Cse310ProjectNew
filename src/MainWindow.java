@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.JScrollBar;
@@ -278,6 +281,25 @@ public class MainWindow extends JFrame {
 		model = new DefaultListModel<String>();
 		onlineList =  new JList<String>(model);
 		scrollPane.setViewportView(onlineList);
+		
+		onlineList.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting()) {
+					String temp = onlineList.getSelectedValue().toString();
+					try {
+						oos.writeObject("pairRequest"+ temp);
+					} catch (IOException e1) {
+						System.err.println("error at chatWindow line 294");
+						e1.printStackTrace();
+					}
+				}
+
+			}
+		});
+		
+		
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(158, 54, 382, 274);

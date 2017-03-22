@@ -4,7 +4,6 @@ import java.io.ObjectOutputStream;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Scanner;
 
 public class Client {
