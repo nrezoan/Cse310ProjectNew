@@ -151,7 +151,7 @@ class ServerThread implements Runnable {
 			} catch (Exception ex) {
 
 			}
-			pairChecking();//working here 154
+			pairChecking();// working here 154
 
 		}
 
@@ -202,14 +202,16 @@ class ServerThread implements Runnable {
 	}
 
 	public boolean pairChecking() {
-		if (opponent != null) {
-			if (this.equals(opponent.opponent) || opponent.opponent.equals(null)) {
-				return true;
-			} else {
-				opponent=null;
-				return false;
-			}
+		if (opponent == null) {
+			return true;
+		}
+		if (!opponent.equals(null) && opponent.opponent.equals(null)) {
+			return true;
+		}
+		if (this.equals(opponent.opponent)) {
+			return true;
 		} else {
+			opponent = null;
 			return false;
 		}
 	}
