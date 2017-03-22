@@ -119,6 +119,11 @@ class ReadThread implements Runnable {
 						String toShow = t.substring(8);
 						mainWindow.setStringToMessageArea(toShow);
 					}
+					
+					else if(t.equals("reset")){
+						mainWindow.setVisibilityGame(false);
+						mainWindow.setVisibilityOnlineWindow(true);
+					}
 				}
 
 			}

@@ -124,7 +124,8 @@ class ServerThread implements Runnable {
 						serverThread.oos.writeObject("responseInfo " + this.thr.getName() + " " + confirmation);
 						if (confirmation.equals("Accepted")) {
 							System.out.println("Pairing done");
-							if(opponent!=null){
+							if(opponent!=null){ 
+								opponent.oos.writeObject("reset");
 								opponent.opponent=null;
 								
 							}
@@ -151,6 +152,7 @@ class ServerThread implements Runnable {
 					}
 
 				}
+				
 
 			} catch (Exception ex) {
 
