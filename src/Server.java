@@ -124,6 +124,10 @@ class ServerThread implements Runnable {
 						serverThread.oos.writeObject("responseInfo " + this.thr.getName() + " " + confirmation);
 						if (confirmation.equals("Accepted")) {
 							System.out.println("Pairing done");
+							if(opponent!=null){
+								opponent.opponent=null;
+								
+							}
 							opponent = serverThread;
 							System.out.println("After Accept is pressed");
 							System.out.println(
@@ -151,7 +155,7 @@ class ServerThread implements Runnable {
 			} catch (Exception ex) {
 
 			}
-			pairChecking();// working here 154
+			
 
 		}
 
