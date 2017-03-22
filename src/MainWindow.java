@@ -61,11 +61,10 @@ public class MainWindow extends JFrame {
 	 * @param name 
 	 * @param userNameList 
 	 */
-	public MainWindow(ObjectOutputStream oos, ObjectInputStream ois, String name, ArrayList<String> userNameList) {
+	public MainWindow(ObjectOutputStream oos, ObjectInputStream ois, String name) {
 		this.oos=oos;
 		this.ois=ois;
 		this.name=name;
-		this.userNameList=userNameList;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 500);
 		contentPane = new JPanel();
@@ -401,7 +400,9 @@ public class MainWindow extends JFrame {
 		
 	}
 	
-	
+	public void setUserNameList(ArrayList<String> userNameList){
+		this.userNameList=userNameList;
+	}
 	
 	   private void determineWhoseTurn(){
 		    if(whoseTurn.equalsIgnoreCase("X")){
