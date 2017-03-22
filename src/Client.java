@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 public class Client {
 
 	private static ObjectOutputStream oos;
@@ -33,15 +35,14 @@ public class Client {
 			String name = "name " + frame.getUserName();
 			String userName = name.substring(5);
 			frame.dispose();
-			MainWindow mainWindow=new MainWindow(oos,ois,userName);
+			MainWindow mainWindow = new MainWindow(oos, ois, userName);
 			mainWindow.setVisible(true);
 
 			System.out.println("from client user logged in");
 
-			
 			// sending the name object to the server
 			oos.writeObject(name);
-			new ReadThread(ois, name, userNameList,mainWindow);
+			new ReadThread(oos,ois, name, userNameList, mainWindow);
 			while (true) {
 				// String s=br.readLine();
 				String s = input.nextLine();
@@ -61,12 +62,14 @@ class ReadThread implements Runnable {
 	String name;
 	ArrayList<String> userNameList;
 	MainWindow mainWindow;
+	ObjectOutputStream oos;
 
-	public ReadThread(ObjectInputStream ois, String name, ArrayList<String> userNameList, MainWindow mainWindow) {
+	public ReadThread(ObjectOutputStream oos, ObjectInputStream ois, String name, ArrayList<String> userNameList, MainWindow mainWindow) {
 		this.ois = ois;
 		this.name = name;
+		this.oos=oos;
 		this.userNameList = userNameList;
-		this.mainWindow=mainWindow;
+		this.mainWindow = mainWindow;
 		this.thr = new Thread(this);
 		thr.start();
 	}
@@ -79,12 +82,20 @@ class ReadThread implements Runnable {
 					if (t.startsWith("name ")) {
 						String name = t.substring(5);
 						userNameList = new ArrayList<String>(Arrays.asList(name.split(" ")));
-						printingArrayList(userNameList);//online user list
+						printingArrayList(userNameList);// online user list
 						mainWindow.setUserNameList(userNameList);
-					}
-					else if(t.startsWith("pairRequest ")){
-						String requester=t.substring(12);
-						System.out.println("Request from "+ requester);
+					} else if (t.startsWith("pairRequest ")) {
+						String requester = t.substring(12);
+						System.out.println("Request from " + requester);
+						int response=responseWindow(requester);
+						if(response==-1 || response==1){
+							oos.writeObject("responseRequest Failed");
+						}
+						else{
+							oos.writeObject("responseRequest Accepted");
+						}
+						
+						
 					}
 				}
 
@@ -103,6 +114,16 @@ class ReadThread implements Runnable {
 		for (int i = 0; i < nameList.size(); i++) {
 			System.out.println(nameList.get(i));
 		}
+	}
+
+public	int responseWindow(String name) {
+		String[] buttons = { "Accept", "Decline" };
+
+		int rc = JOptionPane.showOptionDialog(mainWindow, "Request From " + name, "Confirmation Box",
+				JOptionPane.DEFAULT_OPTION, 0, null, buttons, buttons[1]);
+		System.out.println(rc);
+
+		return rc;
 	}
 
 }

@@ -290,6 +290,7 @@ public class MainWindow extends JFrame {
 					String temp = onlineList.getSelectedValue().toString();
 					try {
 						oos.writeObject("pairRequest "+ temp);
+						
 					} catch (IOException e1) {
 						System.err.println("error at chatWindow line 294");
 						e1.printStackTrace();
