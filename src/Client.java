@@ -82,6 +82,10 @@ class ReadThread implements Runnable {
 						printingArrayList(userNameList);//online user list
 						mainWindow.setUserNameList(userNameList);
 					}
+					else if(t.startsWith("pairRequest ")){
+						String requester=t.substring(12);
+						System.out.println(requester);
+					}
 				}
 
 			}
