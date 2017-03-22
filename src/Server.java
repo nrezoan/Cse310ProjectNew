@@ -47,7 +47,7 @@ class ServerThread implements Runnable {
 	static int client_count = 0;
 	private ArrayList<ServerThread> serverThreadList;
 	private DAO dao;
-	private ServerThread opponent;
+	private ServerThread opponent = null;
 
 	ServerThread(Socket client, ArrayList<ServerThread> serverThreadList, DAO dao) {
 		try {
@@ -110,36 +110,41 @@ class ServerThread implements Runnable {
 					} else if (str.startsWith("pairRequest ")) {
 						String pairClient = str.substring(12);
 						System.out.println("The selected client " + pairClient);
-						ServerThread serverThread= matchingPair(pairClient);
-						serverThread.oos.writeObject("pairRequest "+this.getClientName());
+						ServerThread serverThread = matchingPair(pairClient);
+						serverThread.oos.writeObject("pairRequest " + this.getClientName());
 					}
-					
-					else if(str.startsWith("responseRequest ")){
+
+					else if (str.startsWith("responseRequest ")) {
 						String response = str.substring(16);
-						ArrayList<String> respondedNameConfirmation = new ArrayList<String>(Arrays.asList(response.split(" ")));
+						ArrayList<String> respondedNameConfirmation = new ArrayList<String>(
+								Arrays.asList(response.split(" ")));
 						String name = respondedNameConfirmation.get(0);
 						String confirmation = respondedNameConfirmation.get(1);
-						ServerThread serverThread= matchingPair(name);
-						serverThread.oos.writeObject("responseInfo "+ this.thr.getName() +" "+confirmation);
-						if(confirmation.equals("Accepted")){
+						ServerThread serverThread = matchingPair(name);
+						serverThread.oos.writeObject("responseInfo " + this.thr.getName() + " " + confirmation);
+						if (confirmation.equals("Accepted")) {
 							System.out.println("Pairing done");
-							opponent=serverThread;
+							opponent = serverThread;
 							System.out.println("After Accept is pressed");
-							System.out.println("Opponent= "+ opponent.getClientName() +" &&&& "+"Me= "+ this.thr.getName() );
+							System.out.println(
+									"Opponent= " + opponent.getClientName() + " &&&& " + "Me= " + this.thr.getName());
 						}
-						System.out.println("Request from "+ name + " Request to " + this.thr.getName()); ////********///////
+						System.out.println("Request from " + name + " Request to " + this.thr.getName()); //// ********///////
 					}
-					
-					else if (str.startsWith("opponent ")){
+
+					else if (str.startsWith("opponent ")) {
 						String opponentName = str.substring(9);
-						ServerThread serverThread= matchingPair(opponentName);
-						opponent=serverThread;
+						ServerThread serverThread = matchingPair(opponentName);
+						opponent = serverThread;
 						System.out.println("After OK is pressed");
-						System.out.println("Opponent= "+ opponent.getClientName() +" &&&& "+"Me= "+ this.thr.getName() );
+						System.out.println(
+								"Opponent= " + opponent.getClientName() + " &&&& " + "Me= " + this.thr.getName());
+					} else if (str.startsWith("Message ")) {
+						if (opponent != null) {
+							opponent.oos.writeObject(str);
+						}
+
 					}
-					
-					
-				
 
 				}
 
@@ -193,5 +198,18 @@ class ServerThread implements Runnable {
 			}
 		}
 		return serverThread;
+	}
+
+	public boolean pairChecking() {
+		if (opponent != null) {
+			if (this.equals(opponent.opponent)) {
+				return true;
+			} else {
+				return false;
+			}
+
+		} else {
+			return false;
+		}
 	}
 }

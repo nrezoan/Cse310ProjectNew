@@ -115,6 +115,10 @@ class ReadThread implements Runnable {
 								 }
 						 }
 					}
+					else if(t.startsWith("Message ")){
+						String toShow = t.substring(8);
+						mainWindow.setStringToMessageArea(toShow);
+					}
 				}
 
 			}
