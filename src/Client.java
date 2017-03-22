@@ -34,7 +34,7 @@ public class Client {
 			String name = "name " + frame.getUserName();
 			String userName = name.substring(5);
 			frame.dispose();
-			MainWindow mainWindow=new MainWindow(oos,ois,userName);
+			MainWindow mainWindow=new MainWindow(oos,ois,userName,userNameList);
 			mainWindow.setVisible(true);
 
 			System.out.println("from client user logged in");
@@ -79,8 +79,8 @@ class ReadThread implements Runnable {
 				if (t != null) {
 					if (t.startsWith("name ")) {
 						String name = t.substring(5);
-						ArrayList<String> nameList = new ArrayList<String>(Arrays.asList(name.split(" ")));
-						printingArrayList(nameList);//online user list
+						userNameList = new ArrayList<String>(Arrays.asList(name.split(" ")));
+						printingArrayList(userNameList);//online user list
 					}
 				}
 

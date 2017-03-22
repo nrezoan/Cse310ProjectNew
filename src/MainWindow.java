@@ -47,37 +47,25 @@ public class MainWindow extends JFrame {
 	private String name="";
 	private DefaultListModel<String> model;
 	JList onlineList; 
-	static ArrayList<String> clientList;
+	ArrayList<String> userNameList=null;
 	   
 	String[][] board = new String [3][3];
 	
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainWindow frame = new MainWindow(null,null,null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the frame.
 	 * @param ois 
 	 * @param oos 
 	 * @param name 
+	 * @param userNameList 
 	 */
-	public MainWindow(ObjectOutputStream oos, ObjectInputStream ois, String name) {
+	public MainWindow(ObjectOutputStream oos, ObjectInputStream ois, String name, ArrayList<String> userNameList) {
 		this.oos=oos;
 		this.ois=ois;
 		this.name=name;
+		this.userNameList=userNameList;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 500);
 		contentPane = new JPanel();
@@ -310,7 +298,13 @@ public class MainWindow extends JFrame {
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				model.clear();
+				for (int i = 0; i < userNameList.size(); i++) {
+					System.out.println("line 120");
+					if (!name.equals(userNameList.get(i))) {
+						model.addElement(userNameList.get(i));
+					}
+				}
 				 
 			}
 		});
@@ -403,13 +397,11 @@ public class MainWindow extends JFrame {
 		lblVs.setBounds(678, 75, 95, 64);
 		contentPane.add(lblVs);
 		
-		clientList = new ArrayList<>();
+		
 		
 	}
 	
-	public static void setList(ArrayList<String> list) {
-		clientList = list;
-	}
+	
 	
 	   private void determineWhoseTurn(){
 		    if(whoseTurn.equalsIgnoreCase("X")){
