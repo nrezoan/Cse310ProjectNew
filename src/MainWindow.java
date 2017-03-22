@@ -11,11 +11,13 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -43,6 +45,9 @@ public class MainWindow extends JFrame {
 	private ObjectOutputStream oos;
 	private ObjectInputStream ois;
 	private String name="";
+	private DefaultListModel<String> model;
+	JList onlineList; 
+	static ArrayList<String> clientList;
 	   
 	String[][] board = new String [3][3];
 	
@@ -283,7 +288,8 @@ public class MainWindow extends JFrame {
 		scrollPane.setBounds(0, 54, 148, 274);
 		chatPanel.add(scrollPane);
 		
-		JList onlineList = new JList();
+		model = new DefaultListModel<String>();
+		onlineList =  new JList<String>(model);
 		scrollPane.setViewportView(onlineList);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
@@ -305,12 +311,7 @@ public class MainWindow extends JFrame {
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				 for (int i = 0; i<board.length; i++){
-					    for (int j = 0; j<board.length; j++){
-					        System.out.print(board[i][j]);
-					    }
-					    System.out.println();
-					    }
+				 
 			}
 		});
 		btnRefresh.setBounds(0, 339, 97, 36);
@@ -402,6 +403,12 @@ public class MainWindow extends JFrame {
 		lblVs.setBounds(678, 75, 95, 64);
 		contentPane.add(lblVs);
 		
+		clientList = new ArrayList<>();
+		
+	}
+	
+	public static void setList(ArrayList<String> list) {
+		clientList = list;
 	}
 	
 	   private void determineWhoseTurn(){
