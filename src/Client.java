@@ -89,13 +89,31 @@ class ReadThread implements Runnable {
 						System.out.println("Request from " + requester);
 						int response=responseWindow(requester);
 						if(response==-1 || response==1){
-							oos.writeObject("responseRequest Failed");
+							oos.writeObject("responseRequest " + requester +" Failed");
 						}
 						else{
-							oos.writeObject("responseRequest Accepted");
+							oos.writeObject("responseRequest " + requester +" Accepted");
+							mainWindow.setVisibilityGame(true);
+							mainWindow.setVisibilityOnlineWindow(false);
 						}
 						
 						
+					}
+					else if (t.startsWith("responseInfo ")){
+						String responseRecieved = t.substring(13);
+						ArrayList<String> nameAndConfirmation = new ArrayList<String>(Arrays.asList(responseRecieved.split(" ")));
+						String name = nameAndConfirmation.get(0);
+						String confirmation = nameAndConfirmation.get(1);
+						 String[] options = {"OK"};
+						 int rc=  JOptionPane.showOptionDialog(mainWindow, responseRecieved,"Confirmation",JOptionPane.PLAIN_MESSAGE,
+						    		JOptionPane.INFORMATION_MESSAGE, null, options,options[0]);	
+						 if(rc==0){
+							 mainWindow.setVisibilityGame(true);
+							 mainWindow.setVisibilityOnlineWindow(false);
+							 if(confirmation.equals("Accepted")){
+								 oos.writeObject("opponent "+ name);							
+								 }
+						 }
 					}
 				}
 
@@ -120,7 +138,7 @@ public	int responseWindow(String name) {
 		String[] buttons = { "Accept", "Decline" };
 
 		int rc = JOptionPane.showOptionDialog(mainWindow, "Request From " + name, "Confirmation Box",
-				JOptionPane.DEFAULT_OPTION, 0, null, buttons, buttons[1]);
+				JOptionPane.INFORMATION_MESSAGE, 0, null, buttons, buttons[1]);
 		System.out.println(rc);
 
 		return rc;

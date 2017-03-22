@@ -35,6 +35,7 @@ public class MainWindow extends JFrame {
 	private JPanel contentPane;
 	private JTextField textArea;
 	private JPanel ticTacToePanel; 
+	private JScrollPane scrollPaneOnline; 
 	private JButton btn00;
 	private JButton btn01;
 	private JButton btn02;
@@ -82,6 +83,7 @@ public class MainWindow extends JFrame {
 		ticTacToePanel.setBackground(new Color(219, 112, 147));
 		contentPane.add(ticTacToePanel);
 		ticTacToePanel.setLayout(new GridLayout(3, 3,1,1));
+		ticTacToePanel.setVisible(false);
 		
 		btn00=new JButton();
 		btn01=new JButton();
@@ -274,13 +276,13 @@ public class MainWindow extends JFrame {
 		contentPane.add(chatPanel);
 		chatPanel.setLayout(null);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 54, 148, 274);
-		chatPanel.add(scrollPane);
+		scrollPaneOnline = new JScrollPane();
+		scrollPaneOnline.setBounds(0, 54, 148, 274);
+		chatPanel.add(scrollPaneOnline);
 		
 		model = new DefaultListModel<String>();
 		onlineList =  new JList<String>(model);
-		scrollPane.setViewportView(onlineList);
+		scrollPaneOnline.setViewportView(onlineList);
 		
 		onlineList.addListSelectionListener(new ListSelectionListener() {
 
@@ -302,12 +304,12 @@ public class MainWindow extends JFrame {
 		
 		
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(158, 54, 382, 274);
-		chatPanel.add(scrollPane_1);
+		JScrollPane scrollPaneMsgArea = new JScrollPane();
+		scrollPaneMsgArea.setBounds(158, 54, 382, 274);
+		chatPanel.add(scrollPaneMsgArea);
 		
 		JTextArea msgArea = new JTextArea();
-		scrollPane_1.setViewportView(msgArea);
+		scrollPaneMsgArea.setViewportView(msgArea);
 		
 		JButton btnSend = new JButton("SEND");
 		btnSend.addActionListener(new ActionListener() {
@@ -421,6 +423,14 @@ public class MainWindow extends JFrame {
 		
 		
 		
+	}
+	
+	public void setVisibilityGame(boolean val){
+		ticTacToePanel.setVisible(val);
+	}
+	
+	public void setVisibilityOnlineWindow(boolean val){
+		scrollPaneOnline.setVisible(val);
 	}
 	
 	public void setUserNameList(ArrayList<String> userNameList){
