@@ -99,19 +99,20 @@ class ServerThread implements Runnable {
 							oos.writeObject("Failed");
 						}
 
-					}else if(str.equals("Logout")){
+					} else if (str.equals("Logout")) {
 						serverThreadList.remove(this);
 						String allClientName = getAllClientName();
 						// sending updated string to all clients
 						sendingFromServerToAllClient("name ", allClientName);
-						System.out.println("All current clients are after logout "+getAllClientName());
+						System.out.println("All current clients are after logout " + getAllClientName());
 						return;
-					}
-					else if(str.startsWith("pairRequest ")){
+					} else if (str.startsWith("pairRequest ")) {
 						String pairClient = str.substring(12);
 						System.out.println("The selected client " + pairClient);
+						matchingPair(pairClient);
 					}
-				//	System.out.println("All current clients are "+getAllClientName());
+					// System.out.println("All current clients are
+					// "+getAllClientName());
 
 				}
 
@@ -154,5 +155,16 @@ class ServerThread implements Runnable {
 
 	public String getClientName() {
 		return this.thr.getName();
+	}
+
+	public ServerThread matchingPair(String name) throws NullPointerException {
+
+		ServerThread serverThread = null;
+		for (int i = 0; i < serverThreadList.size(); i++) {
+			if (serverThreadList.get(i).getClientName().equals(name)) {
+				serverThread = serverThreadList.get(i);
+			}
+		}
+		return serverThread;
 	}
 }
