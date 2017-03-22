@@ -84,7 +84,7 @@ class ReadThread implements Runnable {
 					}
 					else if(t.startsWith("pairRequest ")){
 						String requester=t.substring(12);
-						System.out.println(requester);
+						System.out.println("Request from "+ requester);
 					}
 				}
 

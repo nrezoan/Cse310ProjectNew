@@ -110,7 +110,7 @@ class ServerThread implements Runnable {
 						String pairClient = str.substring(12);
 						System.out.println("The selected client " + pairClient);
 						ServerThread serverThread= matchingPair(pairClient);
-						serverThread.oos.writeObject("pairRequest "+this.getAllClientName());
+						serverThread.oos.writeObject("pairRequest "+this.getClientName());
 					}
 					// System.out.println("All current clients are
 					// "+getAllClientName());
