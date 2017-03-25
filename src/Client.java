@@ -14,7 +14,7 @@ public class Client {
 	private static ObjectInputStream ois;
 	private static ArrayList<String> userNameList;
 
-	public static void main(String args[]) {
+	public static void main(String[] args){
 		try {
 			String serverAddress = "127.0.0.1";
 			int serverPort = 33333;

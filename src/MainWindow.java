@@ -54,6 +54,7 @@ public class MainWindow extends JFrame {
 	JTextArea msgArea=null;
 
 	String[][] board = new String[3][3];
+	boolean[][] checkBoard = new boolean[3][3];
 
 	/**
 	 * Create the frame.
@@ -104,6 +105,7 @@ public class MainWindow extends JFrame {
 		btn00.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(checkBoard[0][0]==false){
 				btn00.setText(whoseTurn);
 				if (whoseTurn.equalsIgnoreCase("X")) {
 					btn00.setForeground(Color.red);
@@ -112,8 +114,9 @@ public class MainWindow extends JFrame {
 					btn00.setForeground(Color.blue);
 					board[0][0] = "o";
 				}
+				checkBoard[0][0]=true;
 				determineWhoseTurn();
-
+				}
 			}
 		});
 		btn01.setFont(new java.awt.Font("Verdana", 1, 48));
@@ -121,6 +124,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(checkBoard[0][1]==false){
 				btn01.setText(whoseTurn);
 				if (whoseTurn.equalsIgnoreCase("X")) {
 					btn01.setForeground(Color.red);
@@ -129,8 +133,9 @@ public class MainWindow extends JFrame {
 					btn01.setForeground(Color.blue);
 					board[0][1] = "o";
 				}
+				checkBoard[0][1]=true;
 				determineWhoseTurn();
-
+				}
 			}
 		});
 		btn02.setFont(new java.awt.Font("Verdana", 1, 48));
@@ -138,6 +143,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(checkBoard[0][2]==false){
 				btn02.setText(whoseTurn);
 				if (whoseTurn.equalsIgnoreCase("X")) {
 					btn02.setForeground(Color.red);
@@ -147,7 +153,8 @@ public class MainWindow extends JFrame {
 					board[0][2] = "o";
 				}
 				determineWhoseTurn();
-
+				checkBoard[0][2]=true;
+				}
 			}
 		});
 		btn10.setFont(new java.awt.Font("Verdana", 1, 48));
@@ -155,6 +162,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(checkBoard[1][0]==false){
 				btn10.setText(whoseTurn);
 				if (whoseTurn.equalsIgnoreCase("X")) {
 					btn10.setForeground(Color.red);
@@ -163,8 +171,9 @@ public class MainWindow extends JFrame {
 					btn10.setForeground(Color.blue);
 					board[1][0] = "o";
 				}
+				checkBoard[1][0]=true;
 				determineWhoseTurn();
-
+				}
 			}
 		});
 		btn11.setFont(new java.awt.Font("Verdana", 1, 48));
@@ -172,6 +181,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(checkBoard[1][1]==false){
 				btn11.setText(whoseTurn);
 				if (whoseTurn.equalsIgnoreCase("X")) {
 					btn11.setForeground(Color.red);
@@ -180,8 +190,9 @@ public class MainWindow extends JFrame {
 					btn11.setForeground(Color.blue);
 					board[1][1] = "o";
 				}
+				checkBoard[1][1]=true;
 				determineWhoseTurn();
-
+				}
 			}
 		});
 		btn12.setFont(new java.awt.Font("Verdana", 1, 48));
@@ -189,6 +200,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(checkBoard[1][2]==false){
 				btn12.setText(whoseTurn);
 				if (whoseTurn.equalsIgnoreCase("X")) {
 					btn12.setForeground(Color.red);
@@ -197,8 +209,9 @@ public class MainWindow extends JFrame {
 					btn12.setForeground(Color.blue);
 					board[1][2] = "o";
 				}
+				checkBoard[1][2]=true;
 				determineWhoseTurn();
-
+				}
 			}
 		});
 		btn20.setFont(new java.awt.Font("Verdana", 1, 48));
@@ -206,6 +219,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(checkBoard[2][0]==false){
 				btn20.setText(whoseTurn);
 				if (whoseTurn.equalsIgnoreCase("X")) {
 					btn20.setForeground(Color.red);
@@ -214,8 +228,9 @@ public class MainWindow extends JFrame {
 					btn20.setForeground(Color.blue);
 					board[2][0] = "o";
 				}
+				checkBoard[2][0]=true;
 				determineWhoseTurn();
-
+				}
 			}
 		});
 		btn21.setFont(new java.awt.Font("Verdana", 1, 48));
@@ -223,6 +238,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(checkBoard[2][1]==false){
 				btn21.setText(whoseTurn);
 				if (whoseTurn.equalsIgnoreCase("X")) {
 					btn21.setForeground(Color.red);
@@ -231,8 +247,9 @@ public class MainWindow extends JFrame {
 					btn21.setForeground(Color.blue);
 					board[2][1] = "o";
 				}
+				checkBoard[2][1]=true;
 				determineWhoseTurn();
-
+				}
 			}
 		});
 		btn22.setFont(new java.awt.Font("Verdana", 1, 48));
@@ -240,6 +257,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(checkBoard[2][2]==false){
 				btn22.setText(whoseTurn);
 				if (whoseTurn.equalsIgnoreCase("X")) {
 					btn22.setForeground(Color.red);
@@ -248,8 +266,9 @@ public class MainWindow extends JFrame {
 					btn22.setForeground(Color.blue);
 					board[2][2] = "o";
 				}
+				checkBoard[2][2]=true;
 				determineWhoseTurn();
-
+				}
 			}
 		});
 
