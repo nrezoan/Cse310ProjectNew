@@ -7,6 +7,7 @@ import java.net.UnknownHostException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,6 +49,7 @@ class ServerThread implements Runnable {
 	private ArrayList<ServerThread> serverThreadList;
 	private DAO dao;
 	private ServerThread opponent = null;
+	String myTokenString=null;
 
 	ServerThread(Socket client, ArrayList<ServerThread> serverThreadList, DAO dao) {
 		try {
@@ -124,10 +126,10 @@ class ServerThread implements Runnable {
 						serverThread.oos.writeObject("responseInfo " + this.thr.getName() + " " + confirmation);
 						if (confirmation.equals("Accepted")) {
 							System.out.println("Pairing done");
-							if(opponent!=null){ 
+							if (opponent != null) {
 								opponent.oos.writeObject("reset");
-								opponent.opponent=null;
-								
+								opponent.opponent = null;
+
 							}
 							opponent = serverThread;
 							System.out.println("After Accept is pressed");
@@ -148,25 +150,37 @@ class ServerThread implements Runnable {
 						if (opponent != null) {
 							opponent.oos.writeObject(str);
 						}
-
-					} else if(str.startsWith("Turn ")){
-						String response = str.substring(5);
-						ArrayList<String> turn = new ArrayList<String>(
-								Arrays.asList(response.split(" ")));
-						String val=turn.get(0);
-						int x=Integer.parseInt(turn.get(1));
-						int y=Integer.parseInt(turn.get(2));
-						System.out.println(response);
 						
+					int myToken=selectingPlayerToken();
+					if(myToken==1){
+						myTokenString="x";
+						opponent.myTokenString="o";
+						oos.writeObject("Token "+myTokenString);
+						opponent.oos.writeObject("Token "+opponent.myTokenString);
+						
+					}
+					else{
+						myTokenString="o";
+						opponent.myTokenString="x";
+						oos.writeObject("Token "+myTokenString);
+						opponent.oos.writeObject("Token "+opponent.myTokenString);
+					}
+
+					} else if (str.startsWith("Turn ")) {
+						String response = str.substring(5);
+						ArrayList<String> turn = new ArrayList<String>(Arrays.asList(response.split(" ")));
+						String val = turn.get(0);
+						int x = Integer.parseInt(turn.get(1));
+						int y = Integer.parseInt(turn.get(2));
+						System.out.println(response);
+
 					}
 
 				}
-				
 
 			} catch (Exception ex) {
 
 			}
-			
 
 		}
 
@@ -229,5 +243,15 @@ class ServerThread implements Runnable {
 			opponent = null;
 			return false;
 		}
+	}
+
+	public int selectingPlayerToken() {
+		Random rand = new Random();
+		// nextInt is normally exclusive of the top value,
+		// so add 1 to make it inclusive
+		int max = 1;
+		int min = 0;
+		int randomNum = rand.nextInt((max - min) + 1) + min;
+		return randomNum;
 	}
 }
