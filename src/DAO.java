@@ -40,6 +40,29 @@ public class DAO {
 		}
 	}
 
+	public String viewMyProfile(String name) throws Exception {
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		int count = 0;
+		String info = "";
+
+		String selectSQL = "SELECT * FROM player WHERE name = ?";
+		try {
+			preparedStatement = connection.prepareStatement(selectSQL);
+			preparedStatement.setString(1, name);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				info = "Name: " + resultSet.getString("name");
+				info += "\nAge: " + resultSet.getString("age");
+				info += "\nEmail: " + resultSet.getString("email");
+			}
+
+		} finally {
+			close(preparedStatement, resultSet);
+		}
+		return info;
+	}
+
 	private static void close(Connection connection, Statement statement, ResultSet resultSet) throws SQLException {
 
 		if (resultSet != null) {

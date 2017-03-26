@@ -491,6 +491,16 @@ public class MainWindow extends JFrame {
 		headerPanel.add(btnNewGame);
 
 		JButton btnViewProfile = new JButton("View Profile");
+		btnViewProfile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					oos.writeObject("ViewProfile "+name);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		btnViewProfile.setBounds(124, 11, 106, 36);
 		headerPanel.add(btnViewProfile);
 
@@ -641,6 +651,11 @@ public class MainWindow extends JFrame {
 				btn[i][j].setText("");
 			}
 		}
+	}
+	
+	public void showProfileInfo(String val){
+		
+		JOptionPane.showMessageDialog(null, val);
 	}
 
 }

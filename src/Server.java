@@ -188,6 +188,11 @@ class ServerThread implements Runnable {
 							opponent = null;
 						}
 					}
+					else if(str.equals("ViewProfile ")){
+						String name=str.substring(12);
+						String info=dao.viewMyProfile(name);
+						oos.writeObject("ProfileInfo "+info);
+					}
 
 				}
 
