@@ -11,6 +11,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.JScrollBar;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -33,15 +34,8 @@ public class MainWindow extends JFrame {
 	private JTextField textArea;
 	private JPanel ticTacToePanel;
 	private JScrollPane scrollPaneOnline;
-	private JButton btn00;
-	private JButton btn01;
-	private JButton btn02;
-	private JButton btn10;
-	private JButton btn11;
-	private JButton btn12;
-	private JButton btn20;
-	private JButton btn21;
-	private JButton btn22;
+	private JButton[][] btn= new JButton[3][3];
+
 	private String whoseTurn = null;
 	private ObjectOutputStream oos;
 	private ObjectInputStream ois;
@@ -55,6 +49,7 @@ public class MainWindow extends JFrame {
 
 	String[][] board = new String[3][3];
 	boolean[][] checkBoard = new boolean[3][3];
+	boolean hasWinner =false;
 
 	/**
 	 * Create the frame.
@@ -83,37 +78,37 @@ public class MainWindow extends JFrame {
 		ticTacToePanel.setLayout(new GridLayout(3, 3, 1, 1));
 		ticTacToePanel.setVisible(false);
 
-		btn00 = new JButton();
-		btn01 = new JButton();
-		btn02 = new JButton();
-		btn10 = new JButton();
-		btn11 = new JButton();
-		btn12 = new JButton();
-		btn20 = new JButton();
-		btn21 = new JButton();
-		btn22 = new JButton();
-		ticTacToePanel.add(btn00);
-		ticTacToePanel.add(btn01);
-		ticTacToePanel.add(btn02);
-		ticTacToePanel.add(btn10);
-		ticTacToePanel.add(btn11);
-		ticTacToePanel.add(btn12);
-		ticTacToePanel.add(btn20);
-		ticTacToePanel.add(btn21);
-		ticTacToePanel.add(btn22);
-		btn00.setFont(new java.awt.Font("Verdana", 1, 48));
-		btn00.addActionListener(new ActionListener() {
+		btn[0][0] = new JButton();
+		btn[0][1] = new JButton();
+		btn[0][2] = new JButton();
+		btn[1][0] = new JButton();
+		btn[1][1] = new JButton();
+		btn[1][2] = new JButton();
+		btn[2][0] = new JButton();
+		btn[2][1] = new JButton();
+		btn[2][2] = new JButton();
+		ticTacToePanel.add(btn[0][0]);
+		ticTacToePanel.add(btn[0][1]);
+		ticTacToePanel.add(btn[0][2]);
+		ticTacToePanel.add(btn[1][0]);
+		ticTacToePanel.add(btn[1][1]);
+		ticTacToePanel.add(btn[1][2]);
+		ticTacToePanel.add(btn[2][0]);
+		ticTacToePanel.add(btn[2][1]);
+		ticTacToePanel.add(btn[2][2]);
+		btn[0][0].setFont(new java.awt.Font("Verdana", 1, 48));
+		btn[0][0].addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(checkBoard[0][0]==false){
-				btn00.setText(whoseTurn);
+					btn[0][0].setText(whoseTurn);
 				if (whoseTurn.equalsIgnoreCase("X")) {
-					btn00.setForeground(Color.red);
+					btn[0][0].setForeground(Color.red);
 					board[0][0] = "x";
 					sendingMyTurn("x", "0", "0");
 					
 				} else {
-					btn00.setForeground(Color.blue);
+					btn[0][0].setForeground(Color.blue);
 					board[0][0] = "o";
 					sendingMyTurn("o", "0", "0");
 				}
@@ -122,19 +117,19 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
-		btn01.setFont(new java.awt.Font("Verdana", 1, 48));
-		btn01.addActionListener(new ActionListener() {
+		btn[0][1].setFont(new java.awt.Font("Verdana", 1, 48));
+		btn[0][1].addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(checkBoard[0][1]==false){
-				btn01.setText(whoseTurn);
+					btn[0][1].setText(whoseTurn);
 				if (whoseTurn.equalsIgnoreCase("X")) {
-					btn01.setForeground(Color.red);
+					btn[0][1].setForeground(Color.red);
 					board[0][1] = "x";
 					sendingMyTurn("x", "0", "1");
 				} else {
-					btn01.setForeground(Color.blue);
+					btn[0][1].setForeground(Color.blue);
 					board[0][1] = "o";
 					sendingMyTurn("o", "0", "1");
 				}
@@ -143,19 +138,19 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
-		btn02.setFont(new java.awt.Font("Verdana", 1, 48));
-		btn02.addActionListener(new ActionListener() {
+		btn[0][2].setFont(new java.awt.Font("Verdana", 1, 48));
+		btn[0][2].addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(checkBoard[0][2]==false){
-				btn02.setText(whoseTurn);
+					btn[0][2].setText(whoseTurn);
 				if (whoseTurn.equalsIgnoreCase("X")) {
-					btn02.setForeground(Color.red);
+					btn[0][2].setForeground(Color.red);
 					board[0][2] = "x";
 					sendingMyTurn("x", "0", "2");
 				} else {
-					btn02.setForeground(Color.blue);
+					btn[0][2].setForeground(Color.blue);
 					board[0][2] = "o";
 					sendingMyTurn("o", "0", "2");
 				}
@@ -164,19 +159,19 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
-		btn10.setFont(new java.awt.Font("Verdana", 1, 48));
-		btn10.addActionListener(new ActionListener() {
+		btn[1][0].setFont(new java.awt.Font("Verdana", 1, 48));
+		btn[1][0].addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(checkBoard[1][0]==false){
-				btn10.setText(whoseTurn);
+					btn[1][0].setText(whoseTurn);
 				if (whoseTurn.equalsIgnoreCase("X")) {
-					btn10.setForeground(Color.red);
+					btn[1][0].setForeground(Color.red);
 					board[1][0] = "x";
 					sendingMyTurn("x", "1", "0");
 				} else {
-					btn10.setForeground(Color.blue);
+					btn[1][0].setForeground(Color.blue);
 					board[1][0] = "o";
 					sendingMyTurn("o", "1", "0");
 				}
@@ -185,19 +180,19 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
-		btn11.setFont(new java.awt.Font("Verdana", 1, 48));
-		btn11.addActionListener(new ActionListener() {
+		btn[1][1].setFont(new java.awt.Font("Verdana", 1, 48));
+		btn[1][1].addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(checkBoard[1][1]==false){
-				btn11.setText(whoseTurn);
+					btn[1][1].setText(whoseTurn);
 				if (whoseTurn.equalsIgnoreCase("X")) {
-					btn11.setForeground(Color.red);
+					btn[1][1].setForeground(Color.red);
 					board[1][1] = "x";
 					sendingMyTurn("x", "1", "1");
 				} else {
-					btn11.setForeground(Color.blue);
+					btn[1][1].setForeground(Color.blue);
 					board[1][1] = "o";
 					sendingMyTurn("o", "1", "1");
 				}
@@ -206,19 +201,19 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
-		btn12.setFont(new java.awt.Font("Verdana", 1, 48));
-		btn12.addActionListener(new ActionListener() {
+		btn[1][2].setFont(new java.awt.Font("Verdana", 1, 48));
+		btn[1][2].addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(checkBoard[1][2]==false){
-				btn12.setText(whoseTurn);
+					btn[1][2].setText(whoseTurn);
 				if (whoseTurn.equalsIgnoreCase("X")) {
-					btn12.setForeground(Color.red);
+					btn[1][2].setForeground(Color.red);
 					board[1][2] = "x";
 					sendingMyTurn("x", "1", "2");
 				} else {
-					btn12.setForeground(Color.blue);
+					btn[1][2].setForeground(Color.blue);
 					board[1][2] = "o";
 					sendingMyTurn("o", "1", "2");
 				}
@@ -227,19 +222,19 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
-		btn20.setFont(new java.awt.Font("Verdana", 1, 48));
-		btn20.addActionListener(new ActionListener() {
+		btn[2][0].setFont(new java.awt.Font("Verdana", 1, 48));
+		btn[2][0].addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(checkBoard[2][0]==false){
-				btn20.setText(whoseTurn);
+					btn[2][0].setText(whoseTurn);
 				if (whoseTurn.equalsIgnoreCase("X")) {
-					btn20.setForeground(Color.red);
+					btn[2][0].setForeground(Color.red);
 					board[2][0] = "x";
 					sendingMyTurn("x", "2", "0");
 				} else {
-					btn20.setForeground(Color.blue);
+					btn[2][0].setForeground(Color.blue);
 					board[2][0] = "o";
 					sendingMyTurn("o", "2", "0");
 				}
@@ -248,19 +243,19 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
-		btn21.setFont(new java.awt.Font("Verdana", 1, 48));
-		btn21.addActionListener(new ActionListener() {
+		btn[2][1].setFont(new java.awt.Font("Verdana", 1, 48));
+		btn[2][1].addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(checkBoard[2][1]==false){
-				btn21.setText(whoseTurn);
+					btn[2][1].setText(whoseTurn);
 				if (whoseTurn.equalsIgnoreCase("X")) {
-					btn21.setForeground(Color.red);
+					btn[2][1].setForeground(Color.red);
 					board[2][1] = "x";
 					sendingMyTurn("x", "2", "1");
 				} else {
-					btn21.setForeground(Color.blue);
+					btn[2][1].setForeground(Color.blue);
 					board[2][1] = "o";
 					sendingMyTurn("o", "2", "1");
 				}
@@ -269,19 +264,19 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
-		btn22.setFont(new java.awt.Font("Verdana", 1, 48));
-		btn22.addActionListener(new ActionListener() {
+		btn[2][2].setFont(new java.awt.Font("Verdana", 1, 48));
+		btn[2][2].addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(checkBoard[2][2]==false){
-				btn22.setText(whoseTurn);
+					btn[2][2].setText(whoseTurn);
 				if (whoseTurn.equalsIgnoreCase("X")) {
-					btn22.setForeground(Color.red);
+					btn[2][2].setForeground(Color.red);
 					board[2][2] = "x";
 					sendingMyTurn("x", "2", "2");
 				} else {
-					btn22.setForeground(Color.blue);
+					btn[2][2].setForeground(Color.blue);
 					board[2][2] = "o";
 					sendingMyTurn("o", "2", "2");
 				}
@@ -499,18 +494,20 @@ public class MainWindow extends JFrame {
 			
 			
 			if (val.equalsIgnoreCase("X")) {
-				btn00.setForeground(Color.red);
+				btn[row][colum].setText(val);
+				btn[row][colum].setForeground(Color.red);
 				board[row][colum] = "x";
 				
 				
 			} else {
-				btn00.setForeground(Color.blue);
+				btn[row][colum].setText(val);
+				btn[row][colum].setForeground(Color.blue);
 				board[row][colum] = "o";
 				
 			}
 			checkBoard[row][colum]=true;
 		}
 		}
-		
+
 	}
 
