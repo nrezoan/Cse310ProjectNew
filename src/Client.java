@@ -121,6 +121,7 @@ class ReadThread implements Runnable {
 					else if (t.equals("reset")) {
 						mainWindow.setVisibilityGame(false);
 						mainWindow.setVisibilityOnlineWindow(true);
+						JOptionPane.showMessageDialog(mainWindow, "Other player has quit the game");
 					} else if (t.startsWith("Token ")) {
 						String tokenString = t.substring(6);
 						String[] options = { "OK" };

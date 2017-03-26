@@ -180,6 +180,14 @@ class ServerThread implements Runnable {
 						opponent.oos.writeObject(str);
 
 					}
+					else if (str.equals("Quit ")){
+						System.out.println("Quit is pressed");
+						if (opponent != null) {
+							opponent.oos.writeObject("reset");
+							opponent.opponent = null;
+							opponent = null;
+						}
+					}
 
 				}
 

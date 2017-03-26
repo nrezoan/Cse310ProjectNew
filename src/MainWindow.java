@@ -18,6 +18,9 @@ import javax.swing.JTextField;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -334,23 +337,45 @@ public class MainWindow extends JFrame {
 		onlineList = new JList<String>(model);
 		scrollPaneOnline.setViewportView(onlineList);
 
-		onlineList.addListSelectionListener(new ListSelectionListener() {
+//		onlineList.addListSelectionListener(new ListSelectionListener() {
+//			@Override
+//			public void valueChanged(ListSelectionEvent e) {
+//				if (!e.getValueIsAdjusting()) {
+//					String temp = onlineList.getSelectedValue().toString();
+//					try {
+//						oos.writeObject("pairRequest " + temp);
+//
+//					} catch (IOException e1) {
+//						System.err.println("error at chatWindow line 294");
+//						e1.printStackTrace();
+//					}
+//				}
+//			}
+//		});
+		
 
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				if (!e.getValueIsAdjusting()) {
-					String temp = onlineList.getSelectedValue().toString();
-					try {
-						oos.writeObject("pairRequest " + temp);
-
-					} catch (IOException e1) {
-						System.err.println("error at chatWindow line 294");
-						e1.printStackTrace();
-					}
+	    MouseListener mouseListener = new MouseAdapter() {
+	      public void mouseClicked(MouseEvent mouseEvent) {
+	        JList theList = (JList) mouseEvent.getSource();
+	        if (mouseEvent.getClickCount() == 2) {
+	          int index = theList.locationToIndex(mouseEvent.getPoint());
+	          if (index >= 0) {
+	            Object o = theList.getModel().getElementAt(index);
+	            String temp = o.toString();
+	            System.out.println("Double-clicked on: " + o.toString());
+	            try {
+					oos.writeObject("pairRequest " + temp);
+					onlineList.clearSelection();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					System.err.println("main window 370");
+					e.printStackTrace();
 				}
-
-			}
-		});
+	          }
+	        }
+	      }
+	    };
+	    onlineList.addMouseListener(mouseListener);
 
 		JScrollPane scrollPaneMsgArea = new JScrollPane();
 		scrollPaneMsgArea.setBounds(158, 54, 382, 274);
@@ -452,6 +477,14 @@ public class MainWindow extends JFrame {
 		JButton btnNewGame = new JButton("New Game");
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ticTacToePanel.setVisible(false);
+				scrollPaneOnline.setVisible(true);
+				try {
+					oos.writeObject("Quit ");
+				} catch (IOException e1) {
+				    System.out.println("Main window 460");
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnNewGame.setBounds(10, 11, 106, 36);
@@ -461,7 +494,7 @@ public class MainWindow extends JFrame {
 		btnViewProfile.setBounds(124, 11, 106, 36);
 		headerPanel.add(btnViewProfile);
 
-		JLabel lblXxxHasWon = new JLabel("xxx Has Won ");
+		JLabel lblXxxHasWon = new JLabel("Tic Tac Toe");
 		lblXxxHasWon.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblXxxHasWon.setHorizontalAlignment(SwingConstants.CENTER);
 		lblXxxHasWon.setBounds(279, 15, 374, 27);
@@ -589,15 +622,23 @@ public class MainWindow extends JFrame {
 		}
 
 		if (!winner.equals("")) {
-			JOptionPane.showMessageDialog(null, "Player " + winner + " has won");
+			if(winner.equals(whoseTurn)){
+				JOptionPane.showMessageDialog(null, winner +"- You have won");
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "You lose");
+			}
+			resetBoard();
 		}
 	}
 
 	private void resetBoard() {
 		winner = "";
+		countPressed=0;
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				board[i][j] = "";
+				btn[i][j].setText("");
 			}
 		}
 	}
