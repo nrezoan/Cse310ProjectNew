@@ -494,7 +494,10 @@ public class MainWindow extends JFrame {
 		}
 	}
 	public void setOpponentToken(String val,int row,int colum){
+		
 		if(checkBoard[row][colum]==false){
+			
+			
 			if (val.equalsIgnoreCase("X")) {
 				btn00.setForeground(Color.red);
 				board[row][colum] = "x";

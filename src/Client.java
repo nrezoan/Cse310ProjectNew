@@ -138,6 +138,7 @@ class ReadThread implements Runnable {
 						int x = Integer.parseInt(turn.get(1));
 						int y = Integer.parseInt(turn.get(2));
 						mainWindow.setOpponentToken(val,x,y);
+						System.out.println("into the client opposite turn is "+response);
 					}
 				}
 
