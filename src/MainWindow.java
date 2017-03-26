@@ -42,7 +42,7 @@ public class MainWindow extends JFrame {
 	private JButton btn20;
 	private JButton btn21;
 	private JButton btn22;
-	private String whoseTurn = "X";
+	private String whoseTurn = null;
 	private ObjectOutputStream oos;
 	private ObjectInputStream ois;
 	private String name = "";
@@ -118,7 +118,7 @@ public class MainWindow extends JFrame {
 					sendingMyTurn("o", "0", "0");
 				}
 				checkBoard[0][0]=true;
-				determineWhoseTurn();
+				
 				}
 			}
 		});
@@ -139,7 +139,7 @@ public class MainWindow extends JFrame {
 					sendingMyTurn("o", "0", "1");
 				}
 				checkBoard[0][1]=true;
-				determineWhoseTurn();
+			
 				}
 			}
 		});
@@ -159,7 +159,7 @@ public class MainWindow extends JFrame {
 					board[0][2] = "o";
 					sendingMyTurn("o", "0", "2");
 				}
-				determineWhoseTurn();
+				
 				checkBoard[0][2]=true;
 				}
 			}
@@ -181,7 +181,7 @@ public class MainWindow extends JFrame {
 					sendingMyTurn("o", "1", "0");
 				}
 				checkBoard[1][0]=true;
-				determineWhoseTurn();
+		
 				}
 			}
 		});
@@ -202,7 +202,7 @@ public class MainWindow extends JFrame {
 					sendingMyTurn("o", "1", "1");
 				}
 				checkBoard[1][1]=true;
-				determineWhoseTurn();
+			
 				}
 			}
 		});
@@ -223,7 +223,7 @@ public class MainWindow extends JFrame {
 					sendingMyTurn("o", "1", "2");
 				}
 				checkBoard[1][2]=true;
-				determineWhoseTurn();
+				
 				}
 			}
 		});
@@ -244,7 +244,7 @@ public class MainWindow extends JFrame {
 					sendingMyTurn("o", "2", "0");
 				}
 				checkBoard[2][0]=true;
-				determineWhoseTurn();
+			
 				}
 			}
 		});
@@ -265,7 +265,7 @@ public class MainWindow extends JFrame {
 					sendingMyTurn("o", "2", "1");
 				}
 				checkBoard[2][1]=true;
-				determineWhoseTurn();
+				
 				}
 			}
 		});
@@ -286,7 +286,7 @@ public class MainWindow extends JFrame {
 					sendingMyTurn("o", "2", "2");
 				}
 				checkBoard[2][2]=true;
-				determineWhoseTurn();
+				
 				}
 			}
 		});
@@ -470,12 +470,8 @@ public class MainWindow extends JFrame {
 		this.userNameList = userNameList;
 	}
 
-	private void determineWhoseTurn() {
-		if (whoseTurn.equalsIgnoreCase("X")) {
-			whoseTurn = "O";
-		} else {
-			whoseTurn = "X";
-		}
+	public void determineWhoseTurn(String coin) {
+		this.whoseTurn=coin;
 	}
 	
 	public void setStringToMessageArea(String msg){

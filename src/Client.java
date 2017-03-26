@@ -129,6 +129,7 @@ class ReadThread implements Runnable {
 						String[] options = {"OK"};
 						JOptionPane.showOptionDialog(mainWindow, "Your token is "+ tokenString ,"",JOptionPane.PLAIN_MESSAGE,
 						    		JOptionPane.INFORMATION_MESSAGE, null, options,options[0]);	
+						mainWindow.determineWhoseTurn(tokenString);
 					}
 				}
 
