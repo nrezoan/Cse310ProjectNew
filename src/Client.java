@@ -14,7 +14,7 @@ public class Client {
 	private static ObjectInputStream ois;
 	private static ArrayList<String> userNameList;
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		try {
 			String serverAddress = "127.0.0.1";
 			int serverPort = 33333;
@@ -42,7 +42,7 @@ public class Client {
 
 			// sending the name object to the server
 			oos.writeObject(name);
-			new ReadThread(oos,ois, name, userNameList, mainWindow);
+			new ReadThread(oos, ois, name, userNameList, mainWindow);
 			while (true) {
 				// String s=br.readLine();
 				String s = input.nextLine();
@@ -64,10 +64,11 @@ class ReadThread implements Runnable {
 	MainWindow mainWindow;
 	ObjectOutputStream oos;
 
-	public ReadThread(ObjectOutputStream oos, ObjectInputStream ois, String name, ArrayList<String> userNameList, MainWindow mainWindow) {
+	public ReadThread(ObjectOutputStream oos, ObjectInputStream ois, String name, ArrayList<String> userNameList,
+			MainWindow mainWindow) {
 		this.ois = ois;
 		this.name = name;
-		this.oos=oos;
+		this.oos = oos;
 		this.userNameList = userNameList;
 		this.mainWindow = mainWindow;
 		this.thr = new Thread(this);
@@ -87,58 +88,53 @@ class ReadThread implements Runnable {
 					} else if (t.startsWith("pairRequest ")) {
 						String requester = t.substring(12);
 						System.out.println("Request from " + requester);
-						int response=responseWindow(requester);
-						if(response==-1 || response==1){
-							oos.writeObject("responseRequest " + requester +" Failed");
-						}
-						else{
-							oos.writeObject("responseRequest " + requester +" Accepted");
+						int response = responseWindow(requester);
+						if (response == -1 || response == 1) {
+							oos.writeObject("responseRequest " + requester + " Failed");
+						} else {
+							oos.writeObject("responseRequest " + requester + " Accepted");
 							mainWindow.setVisibilityGame(true);
 							mainWindow.setVisibilityOnlineWindow(false);
 						}
-						
-						
-					}
-					else if (t.startsWith("responseInfo ")){
+
+					} else if (t.startsWith("responseInfo ")) {
 						String responseRecieved = t.substring(13);
-						ArrayList<String> nameAndConfirmation = new ArrayList<String>(Arrays.asList(responseRecieved.split(" ")));
+						ArrayList<String> nameAndConfirmation = new ArrayList<String>(
+								Arrays.asList(responseRecieved.split(" ")));
 						String name = nameAndConfirmation.get(0);
 						String confirmation = nameAndConfirmation.get(1);
-						 String[] options = {"OK"};
-						 int rc=  JOptionPane.showOptionDialog(mainWindow, responseRecieved,"Confirmation",JOptionPane.PLAIN_MESSAGE,
-						    		JOptionPane.INFORMATION_MESSAGE, null, options,options[0]);	
-						 if(rc==0){
-							 mainWindow.setVisibilityGame(true);
-							 mainWindow.setVisibilityOnlineWindow(false);
-							 if(confirmation.equals("Accepted")){
-								 oos.writeObject("opponent "+ name);							
-								 }
-						 }
-					}
-					else if(t.startsWith("Message ")){
+						String[] options = { "OK" };
+						int rc = JOptionPane.showOptionDialog(mainWindow, responseRecieved, "Confirmation",
+								JOptionPane.PLAIN_MESSAGE, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+						if (rc == 0) {
+							mainWindow.setVisibilityGame(true);
+							mainWindow.setVisibilityOnlineWindow(false);
+							if (confirmation.equals("Accepted")) {
+								oos.writeObject("opponent " + name);
+							}
+						}
+					} else if (t.startsWith("Message ")) {
 						String toShow = t.substring(8);
 						mainWindow.setStringToMessageArea(toShow);
 					}
-					
-					else if(t.equals("reset")){
+
+					else if (t.equals("reset")) {
 						mainWindow.setVisibilityGame(false);
 						mainWindow.setVisibilityOnlineWindow(true);
-					}
-					else if(t.startsWith("Token ")){
+					} else if (t.startsWith("Token ")) {
 						String tokenString = t.substring(6);
-						String[] options = {"OK"};
-						JOptionPane.showOptionDialog(mainWindow, "Your token is "+ tokenString ,"",JOptionPane.PLAIN_MESSAGE,
-						    		JOptionPane.INFORMATION_MESSAGE, null, options,options[0]);	
+						String[] options = { "OK" };
+						JOptionPane.showOptionDialog(mainWindow, "Your token is " + tokenString, "",
+								JOptionPane.PLAIN_MESSAGE, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 						mainWindow.determineWhoseTurn(tokenString);
-					}
-					else if(t.startsWith("Turn ")){
+					} else if (t.startsWith("Turn ")) {
 						String response = t.substring(5);
 						ArrayList<String> turn = new ArrayList<String>(Arrays.asList(response.split(" ")));
 						String val = turn.get(0);
 						int x = Integer.parseInt(turn.get(1));
 						int y = Integer.parseInt(turn.get(2));
-						mainWindow.setOpponentToken(val,x,y);
-						System.out.println("into the client opposite turn is "+response);
+						mainWindow.setOpponentToken(val, x, y);
+						System.out.println("into the client opposite turn is " + response);
 					}
 				}
 
@@ -159,7 +155,7 @@ class ReadThread implements Runnable {
 		}
 	}
 
-public	int responseWindow(String name) {
+	public int responseWindow(String name) {
 		String[] buttons = { "Accept", "Decline" };
 
 		int rc = JOptionPane.showOptionDialog(mainWindow, "Request From " + name, "Confirmation Box",
@@ -168,6 +164,5 @@ public	int responseWindow(String name) {
 
 		return rc;
 	}
-
 
 }
