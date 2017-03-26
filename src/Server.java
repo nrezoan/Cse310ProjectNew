@@ -149,6 +149,15 @@ class ServerThread implements Runnable {
 							opponent.oos.writeObject(str);
 						}
 
+					} else if(str.startsWith("Turn ")){
+						String response = str.substring(5);
+						ArrayList<String> turn = new ArrayList<String>(
+								Arrays.asList(response.split(" ")));
+						String val=turn.get(0);
+						int x=Integer.parseInt(turn.get(1));
+						int y=Integer.parseInt(turn.get(2));
+						System.out.println(response);
+						
 					}
 
 				}

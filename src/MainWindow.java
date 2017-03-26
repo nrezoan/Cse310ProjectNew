@@ -110,9 +110,12 @@ public class MainWindow extends JFrame {
 				if (whoseTurn.equalsIgnoreCase("X")) {
 					btn00.setForeground(Color.red);
 					board[0][0] = "x";
+					sendingMyTurn("x", "0", "0");
+					
 				} else {
 					btn00.setForeground(Color.blue);
 					board[0][0] = "o";
+					sendingMyTurn("o", "0", "0");
 				}
 				checkBoard[0][0]=true;
 				determineWhoseTurn();
@@ -129,9 +132,11 @@ public class MainWindow extends JFrame {
 				if (whoseTurn.equalsIgnoreCase("X")) {
 					btn01.setForeground(Color.red);
 					board[0][1] = "x";
+					sendingMyTurn("x", "0", "1");
 				} else {
 					btn01.setForeground(Color.blue);
 					board[0][1] = "o";
+					sendingMyTurn("o", "0", "1");
 				}
 				checkBoard[0][1]=true;
 				determineWhoseTurn();
@@ -148,9 +153,11 @@ public class MainWindow extends JFrame {
 				if (whoseTurn.equalsIgnoreCase("X")) {
 					btn02.setForeground(Color.red);
 					board[0][2] = "x";
+					sendingMyTurn("x", "0", "2");
 				} else {
 					btn02.setForeground(Color.blue);
 					board[0][2] = "o";
+					sendingMyTurn("o", "0", "2");
 				}
 				determineWhoseTurn();
 				checkBoard[0][2]=true;
@@ -167,9 +174,11 @@ public class MainWindow extends JFrame {
 				if (whoseTurn.equalsIgnoreCase("X")) {
 					btn10.setForeground(Color.red);
 					board[1][0] = "x";
+					sendingMyTurn("x", "1", "0");
 				} else {
 					btn10.setForeground(Color.blue);
 					board[1][0] = "o";
+					sendingMyTurn("o", "1", "0");
 				}
 				checkBoard[1][0]=true;
 				determineWhoseTurn();
@@ -186,9 +195,11 @@ public class MainWindow extends JFrame {
 				if (whoseTurn.equalsIgnoreCase("X")) {
 					btn11.setForeground(Color.red);
 					board[1][1] = "x";
+					sendingMyTurn("x", "1", "1");
 				} else {
 					btn11.setForeground(Color.blue);
 					board[1][1] = "o";
+					sendingMyTurn("o", "1", "1");
 				}
 				checkBoard[1][1]=true;
 				determineWhoseTurn();
@@ -205,9 +216,11 @@ public class MainWindow extends JFrame {
 				if (whoseTurn.equalsIgnoreCase("X")) {
 					btn12.setForeground(Color.red);
 					board[1][2] = "x";
+					sendingMyTurn("x", "1", "2");
 				} else {
 					btn12.setForeground(Color.blue);
 					board[1][2] = "o";
+					sendingMyTurn("o", "1", "2");
 				}
 				checkBoard[1][2]=true;
 				determineWhoseTurn();
@@ -224,9 +237,11 @@ public class MainWindow extends JFrame {
 				if (whoseTurn.equalsIgnoreCase("X")) {
 					btn20.setForeground(Color.red);
 					board[2][0] = "x";
+					sendingMyTurn("x", "2", "0");
 				} else {
 					btn20.setForeground(Color.blue);
 					board[2][0] = "o";
+					sendingMyTurn("o", "2", "0");
 				}
 				checkBoard[2][0]=true;
 				determineWhoseTurn();
@@ -243,9 +258,11 @@ public class MainWindow extends JFrame {
 				if (whoseTurn.equalsIgnoreCase("X")) {
 					btn21.setForeground(Color.red);
 					board[2][1] = "x";
+					sendingMyTurn("x", "2", "1");
 				} else {
 					btn21.setForeground(Color.blue);
 					board[2][1] = "o";
+					sendingMyTurn("o", "2", "1");
 				}
 				checkBoard[2][1]=true;
 				determineWhoseTurn();
@@ -262,9 +279,11 @@ public class MainWindow extends JFrame {
 				if (whoseTurn.equalsIgnoreCase("X")) {
 					btn22.setForeground(Color.red);
 					board[2][2] = "x";
+					sendingMyTurn("x", "2", "2");
 				} else {
 					btn22.setForeground(Color.blue);
 					board[2][2] = "o";
+					sendingMyTurn("o", "2", "2");
 				}
 				checkBoard[2][2]=true;
 				determineWhoseTurn();
@@ -467,5 +486,14 @@ public class MainWindow extends JFrame {
 		}
 		
 		msgArea.setText(wholeText);
+	}
+	
+	public void sendingMyTurn(String val,String posX,String posY){
+		try {
+			oos.writeObject("Turn "+val+" "+posX+" "+posY);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
