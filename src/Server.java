@@ -177,6 +177,7 @@ class ServerThread implements Runnable {
 						int x = Integer.parseInt(turn.get(1));
 						int y = Integer.parseInt(turn.get(2));
 						System.out.println(response);
+						opponent.oos.writeObject(response);
 
 					}
 

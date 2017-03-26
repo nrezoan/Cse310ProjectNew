@@ -131,6 +131,13 @@ class ReadThread implements Runnable {
 						    		JOptionPane.INFORMATION_MESSAGE, null, options,options[0]);	
 						mainWindow.determineWhoseTurn(tokenString);
 					}
+					else if(t.startsWith("Turn ")){
+						String response = t.substring(5);
+						ArrayList<String> turn = new ArrayList<String>(Arrays.asList(response.split(" ")));
+						String val = turn.get(0);
+						int x = Integer.parseInt(turn.get(1));
+						int y = Integer.parseInt(turn.get(2));
+					}
 				}
 
 			}

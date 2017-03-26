@@ -493,4 +493,21 @@ public class MainWindow extends JFrame {
 			e.printStackTrace();
 		}
 	}
-}
+	public void setOpponentToken(String val,int row,int colum){
+		if(checkBoard[row][colum]==false){
+			if (val.equalsIgnoreCase("X")) {
+				btn00.setForeground(Color.red);
+				board[row][colum] = "x";
+				
+				
+			} else {
+				btn00.setForeground(Color.blue);
+				board[row][colum] = "o";
+				
+			}
+			checkBoard[row][colum]=true;
+		}
+		}
+		
+	}
+
