@@ -34,7 +34,7 @@ public class MainWindow extends JFrame {
 	private JTextField textArea;
 	private JPanel ticTacToePanel;
 	private JScrollPane scrollPaneOnline;
-	private JButton[][] btn= new JButton[3][3];
+	private JButton[][] btn = new JButton[3][3];
 
 	private String whoseTurn = null;
 	private ObjectOutputStream oos;
@@ -45,11 +45,13 @@ public class MainWindow extends JFrame {
 	ArrayList<String> userNameList = null;
 	private String wholeText = "";
 	private String currentText = "";
-	JTextArea msgArea=null;
+	JTextArea msgArea = null;
 
 	String[][] board = new String[3][3];
 	boolean[][] checkBoard = new boolean[3][3];
-	boolean hasWinner =false;
+	String winner = "";
+//	boolean pressable = true;
+	int countPressed =0;
 
 	/**
 	 * Create the frame.
@@ -96,24 +98,29 @@ public class MainWindow extends JFrame {
 		ticTacToePanel.add(btn[2][0]);
 		ticTacToePanel.add(btn[2][1]);
 		ticTacToePanel.add(btn[2][2]);
+
+		resetBoard();
+
 		btn[0][0].setFont(new java.awt.Font("Verdana", 1, 48));
 		btn[0][0].addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(checkBoard[0][0]==false){
+				if (checkBoard[0][0] == false) {
 					btn[0][0].setText(whoseTurn);
-				if (whoseTurn.equalsIgnoreCase("X")) {
-					btn[0][0].setForeground(Color.red);
-					board[0][0] = "x";
-					sendingMyTurn("x", "0", "0");
-					
-				} else {
-					btn[0][0].setForeground(Color.blue);
-					board[0][0] = "o";
-					sendingMyTurn("o", "0", "0");
-				}
-				checkBoard[0][0]=true;
-				
+					if (whoseTurn.equalsIgnoreCase("X")) {
+						btn[0][0].setForeground(Color.red);
+						board[0][0] = "x";
+						sendingMyTurn("x", "0", "0");
+
+					} else {
+						btn[0][0].setForeground(Color.blue);
+						board[0][0] = "o";
+						sendingMyTurn("o", "0", "0");
+					}
+					countPressed++;
+					checkBoard[0][0] = true;
+					determineIfWin();
+					determineIfDraw();
 				}
 			}
 		});
@@ -122,19 +129,21 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(checkBoard[0][1]==false){
+				if (checkBoard[0][1] == false) {
 					btn[0][1].setText(whoseTurn);
-				if (whoseTurn.equalsIgnoreCase("X")) {
-					btn[0][1].setForeground(Color.red);
-					board[0][1] = "x";
-					sendingMyTurn("x", "0", "1");
-				} else {
-					btn[0][1].setForeground(Color.blue);
-					board[0][1] = "o";
-					sendingMyTurn("o", "0", "1");
-				}
-				checkBoard[0][1]=true;
-			
+					if (whoseTurn.equalsIgnoreCase("X")) {
+						btn[0][1].setForeground(Color.red);
+						board[0][1] = "x";
+						sendingMyTurn("x", "0", "1");
+					} else {
+						btn[0][1].setForeground(Color.blue);
+						board[0][1] = "o";
+						sendingMyTurn("o", "0", "1");
+					}
+					countPressed++;
+					checkBoard[0][1] = true;
+					determineIfWin();
+					determineIfDraw();
 				}
 			}
 		});
@@ -143,19 +152,21 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(checkBoard[0][2]==false){
+				if (checkBoard[0][2] == false) {
 					btn[0][2].setText(whoseTurn);
-				if (whoseTurn.equalsIgnoreCase("X")) {
-					btn[0][2].setForeground(Color.red);
-					board[0][2] = "x";
-					sendingMyTurn("x", "0", "2");
-				} else {
-					btn[0][2].setForeground(Color.blue);
-					board[0][2] = "o";
-					sendingMyTurn("o", "0", "2");
-				}
-				
-				checkBoard[0][2]=true;
+					if (whoseTurn.equalsIgnoreCase("X")) {
+						btn[0][2].setForeground(Color.red);
+						board[0][2] = "x";
+						sendingMyTurn("x", "0", "2");
+					} else {
+						btn[0][2].setForeground(Color.blue);
+						board[0][2] = "o";
+						sendingMyTurn("o", "0", "2");
+					}
+					countPressed++;
+					checkBoard[0][2] = true;
+					determineIfWin();
+					determineIfDraw();
 				}
 			}
 		});
@@ -164,19 +175,21 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(checkBoard[1][0]==false){
+				if (checkBoard[1][0] == false) {
 					btn[1][0].setText(whoseTurn);
-				if (whoseTurn.equalsIgnoreCase("X")) {
-					btn[1][0].setForeground(Color.red);
-					board[1][0] = "x";
-					sendingMyTurn("x", "1", "0");
-				} else {
-					btn[1][0].setForeground(Color.blue);
-					board[1][0] = "o";
-					sendingMyTurn("o", "1", "0");
-				}
-				checkBoard[1][0]=true;
-		
+					if (whoseTurn.equalsIgnoreCase("X")) {
+						btn[1][0].setForeground(Color.red);
+						board[1][0] = "x";
+						sendingMyTurn("x", "1", "0");
+					} else {
+						btn[1][0].setForeground(Color.blue);
+						board[1][0] = "o";
+						sendingMyTurn("o", "1", "0");
+					}
+					countPressed++;
+					checkBoard[1][0] = true;
+					determineIfWin();
+					determineIfDraw();
 				}
 			}
 		});
@@ -185,19 +198,21 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(checkBoard[1][1]==false){
+				if (checkBoard[1][1] == false) {
 					btn[1][1].setText(whoseTurn);
-				if (whoseTurn.equalsIgnoreCase("X")) {
-					btn[1][1].setForeground(Color.red);
-					board[1][1] = "x";
-					sendingMyTurn("x", "1", "1");
-				} else {
-					btn[1][1].setForeground(Color.blue);
-					board[1][1] = "o";
-					sendingMyTurn("o", "1", "1");
-				}
-				checkBoard[1][1]=true;
-			
+					if (whoseTurn.equalsIgnoreCase("X")) {
+						btn[1][1].setForeground(Color.red);
+						board[1][1] = "x";
+						sendingMyTurn("x", "1", "1");
+					} else {
+						btn[1][1].setForeground(Color.blue);
+						board[1][1] = "o";
+						sendingMyTurn("o", "1", "1");
+					}
+					countPressed++;
+					checkBoard[1][1] = true;
+					determineIfWin();
+					determineIfDraw();
 				}
 			}
 		});
@@ -206,19 +221,21 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(checkBoard[1][2]==false){
+				if (checkBoard[1][2] == false) {
 					btn[1][2].setText(whoseTurn);
-				if (whoseTurn.equalsIgnoreCase("X")) {
-					btn[1][2].setForeground(Color.red);
-					board[1][2] = "x";
-					sendingMyTurn("x", "1", "2");
-				} else {
-					btn[1][2].setForeground(Color.blue);
-					board[1][2] = "o";
-					sendingMyTurn("o", "1", "2");
-				}
-				checkBoard[1][2]=true;
-				
+					if (whoseTurn.equalsIgnoreCase("X")) {
+						btn[1][2].setForeground(Color.red);
+						board[1][2] = "x";
+						sendingMyTurn("x", "1", "2");
+					} else {
+						btn[1][2].setForeground(Color.blue);
+						board[1][2] = "o";
+						sendingMyTurn("o", "1", "2");
+					}
+					countPressed++;
+					checkBoard[1][2] = true;
+					determineIfWin();
+					determineIfDraw();
 				}
 			}
 		});
@@ -227,19 +244,21 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(checkBoard[2][0]==false){
+				if (checkBoard[2][0] == false) {
 					btn[2][0].setText(whoseTurn);
-				if (whoseTurn.equalsIgnoreCase("X")) {
-					btn[2][0].setForeground(Color.red);
-					board[2][0] = "x";
-					sendingMyTurn("x", "2", "0");
-				} else {
-					btn[2][0].setForeground(Color.blue);
-					board[2][0] = "o";
-					sendingMyTurn("o", "2", "0");
-				}
-				checkBoard[2][0]=true;
-			
+					if (whoseTurn.equalsIgnoreCase("X")) {
+						btn[2][0].setForeground(Color.red);
+						board[2][0] = "x";
+						sendingMyTurn("x", "2", "0");
+					} else {
+						btn[2][0].setForeground(Color.blue);
+						board[2][0] = "o";
+						sendingMyTurn("o", "2", "0");
+					}
+					countPressed++;
+					checkBoard[2][0] = true;
+					determineIfWin();
+					determineIfDraw();
 				}
 			}
 		});
@@ -248,19 +267,21 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(checkBoard[2][1]==false){
+				if (checkBoard[2][1] == false) {
 					btn[2][1].setText(whoseTurn);
-				if (whoseTurn.equalsIgnoreCase("X")) {
-					btn[2][1].setForeground(Color.red);
-					board[2][1] = "x";
-					sendingMyTurn("x", "2", "1");
-				} else {
-					btn[2][1].setForeground(Color.blue);
-					board[2][1] = "o";
-					sendingMyTurn("o", "2", "1");
-				}
-				checkBoard[2][1]=true;
-				
+					if (whoseTurn.equalsIgnoreCase("X")) {
+						btn[2][1].setForeground(Color.red);
+						board[2][1] = "x";
+						sendingMyTurn("x", "2", "1");
+					} else {
+						btn[2][1].setForeground(Color.blue);
+						board[2][1] = "o";
+						sendingMyTurn("o", "2", "1");
+					}
+					countPressed++;
+					checkBoard[2][1] = true;
+					determineIfWin();
+					determineIfDraw();
 				}
 			}
 		});
@@ -269,19 +290,21 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(checkBoard[2][2]==false){
+				if (checkBoard[2][2] == false) {
 					btn[2][2].setText(whoseTurn);
-				if (whoseTurn.equalsIgnoreCase("X")) {
-					btn[2][2].setForeground(Color.red);
-					board[2][2] = "x";
-					sendingMyTurn("x", "2", "2");
-				} else {
-					btn[2][2].setForeground(Color.blue);
-					board[2][2] = "o";
-					sendingMyTurn("o", "2", "2");
-				}
-				checkBoard[2][2]=true;
-				
+					if (whoseTurn.equalsIgnoreCase("X")) {
+						btn[2][2].setForeground(Color.red);
+						board[2][2] = "x";
+						sendingMyTurn("x", "2", "2");
+					} else {
+						btn[2][2].setForeground(Color.blue);
+						board[2][2] = "o";
+						sendingMyTurn("o", "2", "2");
+					}
+					countPressed++;
+					checkBoard[2][2] = true;
+					determineIfWin();
+					determineIfDraw();
 				}
 			}
 		});
@@ -322,7 +345,7 @@ public class MainWindow extends JFrame {
 		scrollPaneMsgArea.setBounds(158, 54, 382, 274);
 		chatPanel.add(scrollPaneMsgArea);
 
-		 msgArea = new JTextArea();
+		msgArea = new JTextArea();
 		scrollPaneMsgArea.setViewportView(msgArea);
 
 		JButton btnSend = new JButton("SEND");
@@ -330,7 +353,7 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				currentText = name + ": " + textArea.getText();
 				try {
-					oos.writeObject("Message "+currentText);
+					oos.writeObject("Message " + currentText);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -344,7 +367,7 @@ public class MainWindow extends JFrame {
 				msgArea.setText(wholeText);
 				textArea.setText("");
 			}
-			
+
 		});
 		btnSend.setBounds(434, 339, 106, 36);
 		chatPanel.add(btnSend);
@@ -466,48 +489,105 @@ public class MainWindow extends JFrame {
 	}
 
 	public void determineWhoseTurn(String coin) {
-		this.whoseTurn=coin;
+		this.whoseTurn = coin;
 	}
-	
-	public void setStringToMessageArea(String msg){
-		if(wholeText.equals("")){
-			wholeText=msg;
+
+	public void setStringToMessageArea(String msg) {
+		if (wholeText.equals("")) {
+			wholeText = msg;
+		} else {
+			wholeText += "\n" + msg;
 		}
-		else{
-			wholeText+="\n"+msg;
-		}
-		
+
 		msgArea.setText(wholeText);
 	}
-	
-	public void sendingMyTurn(String val,String posX,String posY){
+
+	public void sendingMyTurn(String val, String posX, String posY) {
 		try {
-			oos.writeObject("Turn "+val+" "+posX+" "+posY);
+			oos.writeObject("Turn " + val + " " + posX + " " + posY);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	public void setOpponentToken(String val,int row,int colum){
-		
-		if(checkBoard[row][colum]==false){
-			
-			
+
+	public void setOpponentToken(String val, int row, int colum) {
+
+		if (checkBoard[row][colum] == false) {
+
 			if (val.equalsIgnoreCase("X")) {
 				btn[row][colum].setText(val);
 				btn[row][colum].setForeground(Color.red);
 				board[row][colum] = "x";
-				
-				
+
 			} else {
 				btn[row][colum].setText(val);
 				btn[row][colum].setForeground(Color.blue);
 				board[row][colum] = "o";
-				
+
 			}
-			checkBoard[row][colum]=true;
+			countPressed++;
+			checkBoard[row][colum] = true;
+			determineIfWin();
+			determineIfDraw();
 		}
+	}
+	private void determineIfDraw(){
+		if(countPressed==9){
+			JOptionPane.showMessageDialog(null,"The Game is draw");
+		}
+	}
+	private void determineIfWin() {
+
+		// for x
+		if (board[0][0].equals("x") && board[0][1].equals("x") && board[0][2].equals("x")) {
+			winner = "x";
+		} else if (board[1][0].equals("x") && board[1][1].equals("x") && board[1][2].equals("x")) {
+			winner = "x";
+		} else if (board[2][0].equals("x") && board[2][1].equals("x") && board[2][2].equals("x")) {
+			winner = "x";
+		} else if (board[0][0].equals("x") && board[1][0].equals("x") && board[2][0].equals("x")) {
+			winner = "x";
+		} else if (board[0][1].equals("x") && board[1][1].equals("x") && board[2][1].equals("x")) {
+			winner = "x";
+		} else if (board[0][2].equals("x") && board[1][2].equals("x") && board[2][2].equals("x")) {
+			winner = "x";
+		} else if (board[0][0].equals("x") && board[1][1].equals("x") && board[2][2].equals("x")) {
+			winner = "x";
+		} else if (board[0][2].equals("x") && board[1][1].equals("x") && board[2][0].equals("x")) {
+			winner = "x";
+		}
+		// for o
+		else if (board[0][0].equals("o") && board[0][1].equals("o") && board[0][2].equals("o")) {
+			winner = "o";
+		} else if (board[1][0].equals("o") && board[1][1].equals("o") && board[1][2].equals("o")) {
+			winner = "o";
+		} else if (board[2][0].equals("o") && board[2][1].equals("o") && board[2][2].equals("o")) {
+			winner = "o";
+		} else if (board[0][0].equals("o") && board[1][0].equals("o") && board[2][0].equals("o")) {
+			winner = "o";
+		} else if (board[0][1].equals("o") && board[1][1].equals("o") && board[2][1].equals("o")) {
+			winner = "o";
+		} else if (board[0][2].equals("o") && board[1][2].equals("o") && board[2][2].equals("o")) {
+			winner = "o";
+		} else if (board[0][0].equals("o") && board[1][1].equals("o") && board[2][2].equals("o")) {
+			winner = "o";
+		} else if (board[0][2].equals("o") && board[1][1].equals("o") && board[2][0].equals("o")) {
+			winner = "o";
 		}
 
+		if (!winner.equals("")) {
+			JOptionPane.showMessageDialog(null, "Player " + winner + " has won");
+		}
 	}
 
+	private void resetBoard() {
+		winner = "";
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				board[i][j] = "";
+			}
+		}
+	}
+
+}
