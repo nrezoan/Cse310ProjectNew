@@ -146,25 +146,29 @@ class ServerThread implements Runnable {
 						System.out.println("After OK is pressed");
 						System.out.println(
 								"Opponent= " + opponent.getClientName() + " &&&& " + "Me= " + this.thr.getName());
+						
+						//Sending token to both clients
+						int myToken=selectingPlayerToken();
+						if(myToken==1){
+							myTokenString="x";
+							opponent.myTokenString="o";
+							oos.writeObject("Token "+myTokenString);
+							opponent.oos.writeObject("Token "+opponent.myTokenString);
+							System.out.println(this.thr.getName()+" My token is " + myToken);
+							
+						}
+						else{
+							myTokenString="o";
+							opponent.myTokenString="x";
+							oos.writeObject("Token "+myTokenString);
+							opponent.oos.writeObject("Token "+opponent.myTokenString);
+							System.out.println(this.thr.getName()+" My token is " + myToken);
+						}
 					} else if (str.startsWith("Message ")) {
 						if (opponent != null) {
 							opponent.oos.writeObject(str);
 						}
 						
-					int myToken=selectingPlayerToken();
-					if(myToken==1){
-						myTokenString="x";
-						opponent.myTokenString="o";
-						oos.writeObject("Token "+myTokenString);
-						opponent.oos.writeObject("Token "+opponent.myTokenString);
-						
-					}
-					else{
-						myTokenString="o";
-						opponent.myTokenString="x";
-						oos.writeObject("Token "+myTokenString);
-						opponent.oos.writeObject("Token "+opponent.myTokenString);
-					}
 
 					} else if (str.startsWith("Turn ")) {
 						String response = str.substring(5);

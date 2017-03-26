@@ -477,6 +477,7 @@ public class MainWindow extends JFrame {
 			whoseTurn = "X";
 		}
 	}
+	
 	public void setStringToMessageArea(String msg){
 		if(wholeText.equals("")){
 			wholeText=msg;

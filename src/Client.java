@@ -124,6 +124,12 @@ class ReadThread implements Runnable {
 						mainWindow.setVisibilityGame(false);
 						mainWindow.setVisibilityOnlineWindow(true);
 					}
+					else if(t.startsWith("Token ")){
+						String tokenString = t.substring(6);
+						String[] options = {"OK"};
+						JOptionPane.showOptionDialog(mainWindow, "Your token is "+ tokenString ,"",JOptionPane.PLAIN_MESSAGE,
+						    		JOptionPane.INFORMATION_MESSAGE, null, options,options[0]);	
+					}
 				}
 
 			}
