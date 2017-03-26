@@ -188,12 +188,13 @@ class ServerThread implements Runnable {
 							opponent = null;
 						}
 					}
-					else if(str.equals("ViewProfile ")){
+					else if(str.startsWith("ViewProfile ")){
 						String name=str.substring(12);
+						System.out.println("Check name in server " + name);
 						String info=dao.viewMyProfile(name);
 						oos.writeObject("ProfileInfo "+info);
 					}
-
+					System.out.println("Printing str "+ str);
 				}
 
 			} catch (Exception ex) {

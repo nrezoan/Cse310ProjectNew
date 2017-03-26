@@ -43,10 +43,10 @@ public class DAO {
 	public String viewMyProfile(String name) throws Exception {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		int count = 0;
 		String info = "";
 
 		String selectSQL = "SELECT * FROM player WHERE name = ?";
+		System.out.println("Thik moto naam "+ name);
 		try {
 			preparedStatement = connection.prepareStatement(selectSQL);
 			preparedStatement.setString(1, name);
