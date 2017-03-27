@@ -104,12 +104,20 @@ class ReadThread implements Runnable {
 						String name = nameAndConfirmation.get(0);
 						String confirmation = nameAndConfirmation.get(1);
 						String[] options = { "OK" };
-						int rc = JOptionPane.showOptionDialog(mainWindow, responseRecieved, "Confirmation",
+						String message="";
+						if(confirmation.equals("Failed")){
+							message+=name.toUpperCase()+" has DECLINED your Request";
+						}
+						else {
+							message+=name.toUpperCase()+" has Accepted your Request";
+						}
+						int rc = JOptionPane.showOptionDialog(mainWindow, message, "Confirmation",
 								JOptionPane.PLAIN_MESSAGE, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 						if (rc == 0) {
-							mainWindow.setVisibilityGame(true);
-							mainWindow.setVisibilityOnlineWindow(false);
+							
 							if (confirmation.equals("Accepted")) {
+								mainWindow.setVisibilityGame(true);
+								mainWindow.setVisibilityOnlineWindow(false);
 								oos.writeObject("opponent " + name);
 							}
 						}
@@ -121,6 +129,8 @@ class ReadThread implements Runnable {
 					else if (t.equals("reset")) {
 						mainWindow.setVisibilityGame(false);
 						mainWindow.setVisibilityOnlineWindow(true);
+						mainWindow.resetBoard();
+						mainWindow.flipMyTurn();
 						JOptionPane.showMessageDialog(mainWindow, "Other player has quit the game");
 					} else if (t.startsWith("Token ")) {
 						String tokenString = t.substring(6);
@@ -138,6 +148,10 @@ class ReadThread implements Runnable {
 						System.out.println("into the client opposite turn is " + response);
 					} else if(t.startsWith("ProfileInfo ")){
 						String val=t.substring(12);
+						mainWindow.showProfileInfo(val);
+					}
+					else if(t.startsWith("ScoreInfo ")){
+						String val=t.substring(10);
 						mainWindow.showProfileInfo(val);
 					}
 				}

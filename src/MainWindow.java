@@ -337,21 +337,22 @@ public class MainWindow extends JFrame {
 		onlineList = new JList<String>(model);
 		scrollPaneOnline.setViewportView(onlineList);
 
-//		onlineList.addListSelectionListener(new ListSelectionListener() {
-//			@Override
-//			public void valueChanged(ListSelectionEvent e) {
-//				if (!e.getValueIsAdjusting()) {
-//					String temp = onlineList.getSelectedValue().toString();
-//					try {
-//						oos.writeObject("pairRequest " + temp);
-//
-//					} catch (IOException e1) {
-//						System.err.println("error at chatWindow line 294");
-//						e1.printStackTrace();
-//					}
-//				}
-//			}
-//		});
+		onlineList.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting()) {
+					String temp = onlineList.getSelectedValue().toString();
+					System.out.println("one time clicked on name "+temp);
+					try {
+						oos.writeObject("RequestScore " + temp);
+
+					} catch (IOException e1) {
+						System.err.println("error at chatWindow line 294");
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 		
 
 	    MouseListener mouseListener = new MouseAdapter() {
@@ -481,6 +482,7 @@ public class MainWindow extends JFrame {
 				scrollPaneOnline.setVisible(true);
 				try {
 					oos.writeObject("Quit ");
+					resetBoard();
 				} catch (IOException e1) {
 				    System.out.println("Main window 460");
 					e1.printStackTrace();
@@ -590,6 +592,13 @@ public class MainWindow extends JFrame {
 	private void determineIfDraw(){
 		if(countPressed==9){
 			JOptionPane.showMessageDialog(null,"The Game is draw");
+			try {
+				oos.writeObject("Draw "+name);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			resetBoard();
 		}
 	}
 	private void determineIfWin() {
@@ -634,20 +643,34 @@ public class MainWindow extends JFrame {
 		if (!winner.equals("")) {
 			if(winner.equals(whoseTurn)){
 				JOptionPane.showMessageDialog(null, winner +"- You have won");
+				try {
+					oos.writeObject("Winner "+name);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			else{
 				JOptionPane.showMessageDialog(null, "You lose");
+				try {
+					oos.writeObject("Lost "+name);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			resetBoard();
 		}
 	}
 
-	private void resetBoard() {
+	public void resetBoard() {
 		winner = "";
 		countPressed=0;
+		myTurn=true;
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				board[i][j] = "";
+				checkBoard[i][j]=false;
 				btn[i][j].setText("");
 			}
 		}
@@ -656,6 +679,11 @@ public class MainWindow extends JFrame {
 	public void showProfileInfo(String val){
 		
 		JOptionPane.showMessageDialog(null, val);
+	}
+	public void flipMyTurn(){
+		if(!myTurn){
+			myTurn=true;
+		}
 	}
 
 }
