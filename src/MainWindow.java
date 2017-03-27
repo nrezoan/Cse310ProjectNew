@@ -53,9 +53,10 @@ public class MainWindow extends JFrame {
 	String[][] board = new String[3][3];
 	boolean[][] checkBoard = new boolean[3][3];
 	String winner = "";
-//	boolean pressable = true;
-	int countPressed =0;
-	private boolean myTurn=true;
+	// boolean pressable = true;
+	int countPressed = 0;
+	private boolean myTurn = true;
+	String selectedName = "";
 
 	/**
 	 * Create the frame.
@@ -75,6 +76,7 @@ public class MainWindow extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setTitle("Tic Tac Toe");
 
 		// start of tic tac toe panel
 		ticTacToePanel = new JPanel();
@@ -109,7 +111,7 @@ public class MainWindow extends JFrame {
 		btn[0][0].addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (checkBoard[0][0] == false && myTurn==true) {
+				if (checkBoard[0][0] == false && myTurn == true) {
 					btn[0][0].setText(whoseTurn);
 					if (whoseTurn.equalsIgnoreCase("X")) {
 						btn[0][0].setForeground(Color.red);
@@ -123,7 +125,7 @@ public class MainWindow extends JFrame {
 					}
 					countPressed++;
 					checkBoard[0][0] = true;
-					myTurn=false;
+					myTurn = false;
 					determineIfWin();
 					determineIfDraw();
 				}
@@ -134,7 +136,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (checkBoard[0][1] == false && myTurn==true) {
+				if (checkBoard[0][1] == false && myTurn == true) {
 					btn[0][1].setText(whoseTurn);
 					if (whoseTurn.equalsIgnoreCase("X")) {
 						btn[0][1].setForeground(Color.red);
@@ -149,7 +151,7 @@ public class MainWindow extends JFrame {
 					checkBoard[0][1] = true;
 					determineIfWin();
 					determineIfDraw();
-					myTurn=false;
+					myTurn = false;
 				}
 			}
 		});
@@ -158,7 +160,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (checkBoard[0][2] == false && myTurn==true) {
+				if (checkBoard[0][2] == false && myTurn == true) {
 					btn[0][2].setText(whoseTurn);
 					if (whoseTurn.equalsIgnoreCase("X")) {
 						btn[0][2].setForeground(Color.red);
@@ -173,7 +175,7 @@ public class MainWindow extends JFrame {
 					checkBoard[0][2] = true;
 					determineIfWin();
 					determineIfDraw();
-					myTurn=false;
+					myTurn = false;
 				}
 			}
 		});
@@ -182,7 +184,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (checkBoard[1][0] == false && myTurn==true) {
+				if (checkBoard[1][0] == false && myTurn == true) {
 					btn[1][0].setText(whoseTurn);
 					if (whoseTurn.equalsIgnoreCase("X")) {
 						btn[1][0].setForeground(Color.red);
@@ -197,7 +199,7 @@ public class MainWindow extends JFrame {
 					checkBoard[1][0] = true;
 					determineIfWin();
 					determineIfDraw();
-					myTurn=false;
+					myTurn = false;
 				}
 			}
 		});
@@ -206,7 +208,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (checkBoard[1][1] == false && myTurn==true) {
+				if (checkBoard[1][1] == false && myTurn == true) {
 					btn[1][1].setText(whoseTurn);
 					if (whoseTurn.equalsIgnoreCase("X")) {
 						btn[1][1].setForeground(Color.red);
@@ -221,7 +223,7 @@ public class MainWindow extends JFrame {
 					checkBoard[1][1] = true;
 					determineIfWin();
 					determineIfDraw();
-					myTurn=false;
+					myTurn = false;
 				}
 			}
 		});
@@ -230,7 +232,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (checkBoard[1][2] == false && myTurn==true) {
+				if (checkBoard[1][2] == false && myTurn == true) {
 					btn[1][2].setText(whoseTurn);
 					if (whoseTurn.equalsIgnoreCase("X")) {
 						btn[1][2].setForeground(Color.red);
@@ -245,7 +247,7 @@ public class MainWindow extends JFrame {
 					checkBoard[1][2] = true;
 					determineIfWin();
 					determineIfDraw();
-					myTurn=false;
+					myTurn = false;
 				}
 			}
 		});
@@ -254,7 +256,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (checkBoard[2][0] == false && myTurn==true) {
+				if (checkBoard[2][0] == false && myTurn == true) {
 					btn[2][0].setText(whoseTurn);
 					if (whoseTurn.equalsIgnoreCase("X")) {
 						btn[2][0].setForeground(Color.red);
@@ -269,8 +271,8 @@ public class MainWindow extends JFrame {
 					checkBoard[2][0] = true;
 					determineIfWin();
 					determineIfDraw();
-					myTurn=false;
-					
+					myTurn = false;
+
 				}
 			}
 		});
@@ -279,7 +281,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (checkBoard[2][1] == false && myTurn==true) {
+				if (checkBoard[2][1] == false && myTurn == true) {
 					btn[2][1].setText(whoseTurn);
 					if (whoseTurn.equalsIgnoreCase("X")) {
 						btn[2][1].setForeground(Color.red);
@@ -294,7 +296,7 @@ public class MainWindow extends JFrame {
 					checkBoard[2][1] = true;
 					determineIfWin();
 					determineIfDraw();
-					myTurn=false;
+					myTurn = false;
 				}
 			}
 		});
@@ -303,7 +305,7 @@ public class MainWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (checkBoard[2][2] == false && myTurn==true) {
+				if (checkBoard[2][2] == false && myTurn == true) {
 					btn[2][2].setText(whoseTurn);
 					if (whoseTurn.equalsIgnoreCase("X")) {
 						btn[2][2].setForeground(Color.red);
@@ -318,7 +320,7 @@ public class MainWindow extends JFrame {
 					checkBoard[2][2] = true;
 					determineIfWin();
 					determineIfDraw();
-					myTurn=false;
+					myTurn = false;
 				}
 			}
 		});
@@ -341,42 +343,10 @@ public class MainWindow extends JFrame {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()) {
-					String temp = onlineList.getSelectedValue().toString();
-					System.out.println("one time clicked on name "+temp);
-					try {
-						oos.writeObject("RequestScore " + temp);
-
-					} catch (IOException e1) {
-						System.err.println("error at chatWindow line 294");
-						e1.printStackTrace();
-					}
+					selectedName = onlineList.getSelectedValue().toString();
 				}
 			}
 		});
-		
-
-	    MouseListener mouseListener = new MouseAdapter() {
-	      public void mouseClicked(MouseEvent mouseEvent) {
-	        JList theList = (JList) mouseEvent.getSource();
-	        if (mouseEvent.getClickCount() == 2) {
-	          int index = theList.locationToIndex(mouseEvent.getPoint());
-	          if (index >= 0) {
-	            Object o = theList.getModel().getElementAt(index);
-	            String temp = o.toString();
-	            System.out.println("Double-clicked on: " + o.toString());
-	            try {
-					oos.writeObject("pairRequest " + temp);
-					onlineList.clearSelection();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					System.err.println("main window 370");
-					e.printStackTrace();
-				}
-	          }
-	        }
-	      }
-	    };
-	    onlineList.addMouseListener(mouseListener);
 
 		JScrollPane scrollPaneMsgArea = new JScrollPane();
 		scrollPaneMsgArea.setBounds(158, 54, 382, 274);
@@ -438,18 +408,11 @@ public class MainWindow extends JFrame {
 		olinePlayers.setBounds(0, 11, 148, 32);
 		chatPanel.add(olinePlayers);
 
-		JLabel requestToPlay = new JLabel("## Wants to play ");
-		requestToPlay.setHorizontalAlignment(SwingConstants.CENTER);
-		requestToPlay.setBounds(158, 9, 156, 36);
-		chatPanel.add(requestToPlay);
-
-		JButton btnAccept = new JButton("Accept");
-		btnAccept.setBounds(313, 9, 106, 36);
-		chatPanel.add(btnAccept);
-
-		JButton btnDecline = new JButton("Decline");
-		btnDecline.setBounds(424, 9, 106, 36);
-		chatPanel.add(btnDecline);
+		JLabel userName = new JLabel(name.toUpperCase());
+		userName.setBounds(328, 8, 106, 36);
+		chatPanel.add(userName);
+		userName.setFont(new Font("Arial", Font.BOLD, 14));
+		userName.setHorizontalAlignment(SwingConstants.TRAILING);
 
 		JPanel headerPanel = new JPanel();
 		headerPanel.setBounds(10, 11, 861, 53);
@@ -468,12 +431,8 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
-		btnLogout.setBounds(762, 11, 89, 23);
+		btnLogout.setBounds(240, 11, 120, 36);
 		headerPanel.add(btnLogout);
-
-		JLabel userName = new JLabel(name);
-		userName.setBounds(698, 15, 54, 14);
-		headerPanel.add(userName);
 
 		JButton btnNewGame = new JButton("New Game");
 		btnNewGame.addActionListener(new ActionListener() {
@@ -484,19 +443,60 @@ public class MainWindow extends JFrame {
 					oos.writeObject("Quit ");
 					resetBoard();
 				} catch (IOException e1) {
-				    System.out.println("Main window 460");
+					System.out.println("Main window 460");
 					e1.printStackTrace();
 				}
 			}
 		});
-		btnNewGame.setBounds(10, 11, 106, 36);
+		btnNewGame.setBounds(0, 11, 120, 36);
 		headerPanel.add(btnNewGame);
 
-		JButton btnViewProfile = new JButton("View Profile");
-		btnViewProfile.addActionListener(new ActionListener() {
+		JButton btnSendRequest = new JButton("Send Request");
+		btnSendRequest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					oos.writeObject("pairRequest " + selectedName);
+					onlineList.clearSelection();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					System.err.println("main window 461");
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnSendRequest.setBounds(120, 11, 120, 36);
+		headerPanel.add(btnSendRequest);
+
+		JButton btnViewMyProfile = new JButton("View My Profile");
+		btnViewMyProfile.setBounds(691, 11, 160, 36);
+		headerPanel.add(btnViewMyProfile);
+
+		JButton btnViewOpponetProfile = new JButton("View Opponent Profile");
+		btnViewOpponetProfile.setBounds(531, 11, 160, 36);
+		headerPanel.add(btnViewOpponetProfile);
+
+		JLabel lblXxxHasWon = new JLabel("Tic Tac Toe");
+		lblXxxHasWon.setBounds(250, 15, 374, 27);
+		headerPanel.add(lblXxxHasWon);
+		lblXxxHasWon.setFont(new Font("Tahoma", Font.BOLD, 25));
+		lblXxxHasWon.setHorizontalAlignment(SwingConstants.CENTER);
+		btnViewOpponetProfile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (!selectedName.equals("")) {
+					try {
+						oos.writeObject("RequestScore " + selectedName);
+						selectedName = "";
+					} catch (IOException e1) {
+						System.err.println("error at chatWindow line 294");
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		btnViewMyProfile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					oos.writeObject("ViewProfile "+name);
+					oos.writeObject("ViewProfile " + name);
 					System.out.println("Clicked view " + name);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -504,14 +504,6 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
-		btnViewProfile.setBounds(124, 11, 106, 36);
-		headerPanel.add(btnViewProfile);
-
-		JLabel lblXxxHasWon = new JLabel("Tic Tac Toe");
-		lblXxxHasWon.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblXxxHasWon.setHorizontalAlignment(SwingConstants.CENTER);
-		lblXxxHasWon.setBounds(279, 15, 374, 27);
-		headerPanel.add(lblXxxHasWon);
 
 		JLabel myName = new JLabel("XXX");
 		myName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -570,7 +562,7 @@ public class MainWindow extends JFrame {
 
 	public void setOpponentToken(String val, int row, int colum) {
 
-		if (checkBoard[row][colum] == false ) {
+		if (checkBoard[row][colum] == false) {
 
 			if (val.equalsIgnoreCase("X")) {
 				btn[row][colum].setText(val);
@@ -587,14 +579,15 @@ public class MainWindow extends JFrame {
 			checkBoard[row][colum] = true;
 			determineIfWin();
 			determineIfDraw();
-			myTurn=true;
+			myTurn = true;
 		}
 	}
-	private void determineIfDraw(){
-		if(countPressed==9){
-			JOptionPane.showMessageDialog(null,"The Game is draw");
+
+	private void determineIfDraw() {
+		if (countPressed == 9) {
+			JOptionPane.showMessageDialog(null, "The Game is draw");
 			try {
-				oos.writeObject("Draw "+name);
+				oos.writeObject("Draw " + name);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -602,6 +595,7 @@ public class MainWindow extends JFrame {
 			resetBoard();
 		}
 	}
+
 	private void determineIfWin() {
 
 		// for x
@@ -642,19 +636,18 @@ public class MainWindow extends JFrame {
 		}
 
 		if (!winner.equals("")) {
-			if(winner.equals(whoseTurn)){
-				JOptionPane.showMessageDialog(null, winner +"- You have won");
+			if (winner.equals(whoseTurn)) {
+				JOptionPane.showMessageDialog(null, winner + "- You have won");
 				try {
-					oos.writeObject("Winner "+name);
+					oos.writeObject("Winner " + name);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
-			else{
+			} else {
 				JOptionPane.showMessageDialog(null, "You lose");
 				try {
-					oos.writeObject("Lost "+name);
+					oos.writeObject("Lost " + name);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -666,24 +659,25 @@ public class MainWindow extends JFrame {
 
 	public void resetBoard() {
 		winner = "";
-		countPressed=0;
-		myTurn=true;
+		countPressed = 0;
+		myTurn = true;
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				board[i][j] = "";
-				checkBoard[i][j]=false;
+				checkBoard[i][j] = false;
 				btn[i][j].setText("");
 			}
 		}
 	}
-	
-	public void showProfileInfo(String val){
-		
+
+	public void showProfileInfo(String val) {
+
 		JOptionPane.showMessageDialog(null, val);
 	}
-	public void flipMyTurn(){
-		if(!myTurn){
-			myTurn=true;
+
+	public void flipMyTurn() {
+		if (!myTurn) {
+			myTurn = true;
 		}
 	}
 

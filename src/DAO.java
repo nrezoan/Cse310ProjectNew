@@ -45,7 +45,7 @@ public class DAO {
 		ResultSet resultSet = null;
 		String info = "";
 
-		String selectSQL = "SELECT * FROM player WHERE name = ?";
+		String selectSQL = "SELECT player.name, player.age, player.email,score.win,score.lose,score.draw FROM player INNER JOIN score ON player.name=score.name WHERE player.name=?";
 		System.out.println("Thik moto naam "+ name);
 		try {
 			preparedStatement = connection.prepareStatement(selectSQL);
@@ -55,6 +55,9 @@ public class DAO {
 				info = "Name: " + resultSet.getString("name");
 				info += "\nAge: " + resultSet.getString("age");
 				info += "\nEmail: " + resultSet.getString("email");
+				info += "\nWin: " + resultSet.getString("win");
+				info += "\nLose: " + resultSet.getString("lose");
+				info += "\nDraw: " + resultSet.getString("draw");
 			}
 
 		} finally {
