@@ -339,6 +339,7 @@ public class MainWindow extends JFrame {
 		onlineList = new JList<String>(model);
 		scrollPaneOnline.setViewportView(onlineList);
 
+<<<<<<< HEAD
 		onlineList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
@@ -347,6 +348,48 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
+=======
+//		onlineList.addListSelectionListener(new ListSelectionListener() {
+//			@Override
+//			public void valueChanged(ListSelectionEvent e) {
+//				if (!e.getValueIsAdjusting()) {
+//					String temp = onlineList.getSelectedValue().toString();
+//					System.out.println("one time clicked on name "+temp);
+//					try {
+//						oos.writeObject("RequestScore " + temp);
+//
+//					} catch (IOException e1) {
+//						System.err.println("error at chatWindow line 294");
+//						e1.printStackTrace();
+//					}
+//				}
+//			}
+//		});
+		
+
+	    MouseListener mouseListener = new MouseAdapter() {
+	      public void mouseClicked(MouseEvent mouseEvent) {
+	        JList theList = (JList) mouseEvent.getSource();
+	        if (mouseEvent.getClickCount() == 2) {
+	          int index = theList.locationToIndex(mouseEvent.getPoint());
+	          if (index >= 0) {
+	            Object o = theList.getModel().getElementAt(index);
+	            String temp = o.toString();
+	            System.out.println("Double-clicked on: " + o.toString());
+	            try {
+					oos.writeObject("pairRequest " + temp);
+					onlineList.clearSelection();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					System.err.println("main window 370");
+					e.printStackTrace();
+				}
+	          }
+	        }
+	      }
+	    };
+	    onlineList.addMouseListener(mouseListener);
+>>>>>>> origin/master
 
 		JScrollPane scrollPaneMsgArea = new JScrollPane();
 		scrollPaneMsgArea.setBounds(158, 54, 382, 274);
@@ -408,11 +451,36 @@ public class MainWindow extends JFrame {
 		olinePlayers.setBounds(0, 11, 148, 32);
 		chatPanel.add(olinePlayers);
 
+<<<<<<< HEAD
 		JLabel userName = new JLabel(name.toUpperCase());
 		userName.setBounds(328, 8, 106, 36);
 		chatPanel.add(userName);
 		userName.setFont(new Font("Arial", Font.BOLD, 14));
 		userName.setHorizontalAlignment(SwingConstants.TRAILING);
+=======
+		JButton btnViewOpponetProfile = new JButton("View Opponent Profile");
+		btnViewOpponetProfile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnViewOpponetProfile.setBounds(243, 9, 160, 36);
+		chatPanel.add(btnViewOpponetProfile);
+		
+				JButton btnViewMyProfile = new JButton("View My Profile");
+				btnViewMyProfile.setBounds(413, 9, 127, 36);
+				chatPanel.add(btnViewMyProfile);
+				btnViewMyProfile.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						try {
+							oos.writeObject("ViewProfile "+name);
+							System.out.println("Clicked view " + name);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				});
+>>>>>>> origin/master
 
 		JPanel headerPanel = new JPanel();
 		headerPanel.setBounds(10, 11, 861, 53);
@@ -431,9 +499,21 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
+<<<<<<< HEAD
 		btnLogout.setBounds(240, 11, 120, 36);
 		headerPanel.add(btnLogout);
 
+=======
+		btnLogout.setBounds(755, 11, 106, 36);
+		headerPanel.add(btnLogout);
+
+		JLabel userName = new JLabel(name.toUpperCase());
+		userName.setFont(new Font("Arial", Font.BOLD, 14));
+		userName.setHorizontalAlignment(SwingConstants.TRAILING);
+		userName.setBounds(629, 11, 106, 36);
+		headerPanel.add(userName);
+
+>>>>>>> origin/master
 		JButton btnNewGame = new JButton("New Game");
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -448,6 +528,7 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
+<<<<<<< HEAD
 		btnNewGame.setBounds(0, 11, 120, 36);
 		headerPanel.add(btnNewGame);
 
@@ -504,6 +585,20 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
+=======
+		btnNewGame.setBounds(0, 11, 106, 36);
+		headerPanel.add(btnNewGame);
+
+		JLabel lblXxxHasWon = new JLabel("Tic Tac Toe");
+		lblXxxHasWon.setFont(new Font("Tahoma", Font.BOLD, 25));
+		lblXxxHasWon.setHorizontalAlignment(SwingConstants.CENTER);
+		lblXxxHasWon.setBounds(279, 15, 374, 27);
+		headerPanel.add(lblXxxHasWon);
+		
+				JButton btnSendRequest = new JButton("Send Request");
+				btnSendRequest.setBounds(116, 11, 116, 36);
+				headerPanel.add(btnSendRequest);
+>>>>>>> origin/master
 
 		JLabel myName = new JLabel("XXX");
 		myName.setHorizontalAlignment(SwingConstants.CENTER);
