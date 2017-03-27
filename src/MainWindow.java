@@ -75,6 +75,7 @@ public class MainWindow extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setTitle("Tic Tac Toe");
 
 		// start of tic tac toe panel
 		ticTacToePanel = new JPanel();
@@ -337,22 +338,22 @@ public class MainWindow extends JFrame {
 		onlineList = new JList<String>(model);
 		scrollPaneOnline.setViewportView(onlineList);
 
-		onlineList.addListSelectionListener(new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				if (!e.getValueIsAdjusting()) {
-					String temp = onlineList.getSelectedValue().toString();
-					System.out.println("one time clicked on name "+temp);
-					try {
-						oos.writeObject("RequestScore " + temp);
-
-					} catch (IOException e1) {
-						System.err.println("error at chatWindow line 294");
-						e1.printStackTrace();
-					}
-				}
-			}
-		});
+//		onlineList.addListSelectionListener(new ListSelectionListener() {
+//			@Override
+//			public void valueChanged(ListSelectionEvent e) {
+//				if (!e.getValueIsAdjusting()) {
+//					String temp = onlineList.getSelectedValue().toString();
+//					System.out.println("one time clicked on name "+temp);
+//					try {
+//						oos.writeObject("RequestScore " + temp);
+//
+//					} catch (IOException e1) {
+//						System.err.println("error at chatWindow line 294");
+//						e1.printStackTrace();
+//					}
+//				}
+//			}
+//		});
 		
 
 	    MouseListener mouseListener = new MouseAdapter() {
@@ -438,18 +439,28 @@ public class MainWindow extends JFrame {
 		olinePlayers.setBounds(0, 11, 148, 32);
 		chatPanel.add(olinePlayers);
 
-		JLabel requestToPlay = new JLabel("## Wants to play ");
-		requestToPlay.setHorizontalAlignment(SwingConstants.CENTER);
-		requestToPlay.setBounds(158, 9, 156, 36);
-		chatPanel.add(requestToPlay);
-
-		JButton btnAccept = new JButton("Accept");
-		btnAccept.setBounds(313, 9, 106, 36);
-		chatPanel.add(btnAccept);
-
-		JButton btnDecline = new JButton("Decline");
-		btnDecline.setBounds(424, 9, 106, 36);
-		chatPanel.add(btnDecline);
+		JButton btnViewOpponetProfile = new JButton("View Opponent Profile");
+		btnViewOpponetProfile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnViewOpponetProfile.setBounds(243, 9, 160, 36);
+		chatPanel.add(btnViewOpponetProfile);
+		
+				JButton btnViewMyProfile = new JButton("View My Profile");
+				btnViewMyProfile.setBounds(413, 9, 127, 36);
+				chatPanel.add(btnViewMyProfile);
+				btnViewMyProfile.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						try {
+							oos.writeObject("ViewProfile "+name);
+							System.out.println("Clicked view " + name);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				});
 
 		JPanel headerPanel = new JPanel();
 		headerPanel.setBounds(10, 11, 861, 53);
@@ -468,11 +479,13 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
-		btnLogout.setBounds(762, 11, 89, 23);
+		btnLogout.setBounds(755, 11, 106, 36);
 		headerPanel.add(btnLogout);
 
-		JLabel userName = new JLabel(name);
-		userName.setBounds(698, 15, 54, 14);
+		JLabel userName = new JLabel(name.toUpperCase());
+		userName.setFont(new Font("Arial", Font.BOLD, 14));
+		userName.setHorizontalAlignment(SwingConstants.TRAILING);
+		userName.setBounds(629, 11, 106, 36);
 		headerPanel.add(userName);
 
 		JButton btnNewGame = new JButton("New Game");
@@ -489,29 +502,18 @@ public class MainWindow extends JFrame {
 				}
 			}
 		});
-		btnNewGame.setBounds(10, 11, 106, 36);
+		btnNewGame.setBounds(0, 11, 106, 36);
 		headerPanel.add(btnNewGame);
 
-		JButton btnViewProfile = new JButton("View Profile");
-		btnViewProfile.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					oos.writeObject("ViewProfile "+name);
-					System.out.println("Clicked view " + name);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
-		btnViewProfile.setBounds(124, 11, 106, 36);
-		headerPanel.add(btnViewProfile);
-
 		JLabel lblXxxHasWon = new JLabel("Tic Tac Toe");
-		lblXxxHasWon.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblXxxHasWon.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblXxxHasWon.setHorizontalAlignment(SwingConstants.CENTER);
 		lblXxxHasWon.setBounds(279, 15, 374, 27);
 		headerPanel.add(lblXxxHasWon);
+		
+				JButton btnSendRequest = new JButton("Send Request");
+				btnSendRequest.setBounds(116, 11, 116, 36);
+				headerPanel.add(btnSendRequest);
 
 		JLabel myName = new JLabel("XXX");
 		myName.setHorizontalAlignment(SwingConstants.CENTER);
