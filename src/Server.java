@@ -190,9 +190,11 @@ class ServerThread implements Runnable {
 					}
 					else if(str.startsWith("ViewProfile ")){
 						String name=str.substring(12);
+						System.out.println("Check name in server " + name);
 						String info=dao.viewMyProfile(name);
 						oos.writeObject("ProfileInfo "+info);
 					}
+<<<<<<< HEAD
 					else if(str.startsWith("RequestScore ")){
 						String name=str.substring(13);
 						String info=dao.viewScore(name);
@@ -213,6 +215,9 @@ class ServerThread implements Runnable {
 					}
 					
 
+=======
+					System.out.println("Printing str "+ str);
+>>>>>>> origin/master
 				}
 
 			} catch (Exception ex) {

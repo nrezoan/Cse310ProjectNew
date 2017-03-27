@@ -497,6 +497,7 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					oos.writeObject("ViewProfile "+name);
+					System.out.println("Clicked view " + name);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
